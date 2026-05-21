@@ -1,7 +1,7 @@
 title: "Beauty Studio"
 description: "Элитный салон красоты — стрижки, окрашивание, уход за кожей и ногтевой сервис"
-url: ""  # Замените на: https://ВАШ_ЛОГИН.github.io
-baseurl: ""  # Если репо называется beauty-studio, поставьте: /beauty-studio
+url: "https://evgiv08.github.io"  # Замените на: https://ВАШ_ЛОГИН.github.io
+baseurl: "/mila-beauty-room"  # Если репо называется beauty-studio, поставьте: /beauty-studio
 
 # Контакты (редактируются здесь или через CMS)
 salon:

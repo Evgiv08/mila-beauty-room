@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Галерея — Beauty Studio</title>
+  <meta name="description" content="Галерея работ мастеров Beauty Studio. Стрижки, окрашивание, маникюр, макияж." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        Beauty<span>Studio</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/">Главная</a></li>
+        <li><a href="/price.html">Прайс</a></li>
+        <li><a href="/gallery.html" class="active">Галерея</a></li>
+        <li>
+          <a href="/#contact" class="btn btn-outline" style="padding:8px 22px;font-size:0.8rem;">
+            Записаться
+          </a>
+        </li>
+      </ul>
+
+      <button class="nav-burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="/">Главная</a>
+      <a href="/price.html">Прайс</a>
+      <a href="/gallery.html" class="active">Галерея</a>
+      <a href="/#contact">Записаться</a>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <div class="container">
+    <span class="hero-eyebrow">✦ Наши работы</span>
+    <h1 class="section-title">Галерея</h1>
+    <span class="gold-line"></span>
+    <p class="section-subtitle">Каждая работа — уникальный образ, созданный с любовью</p>
+  </div>
+</div>
+
+<!-- ===== CAROUSEL ===== -->
+<section class="carousel-section">
+  <div class="container">
+    <div class="carousel-wrap" id="mainCarousel">
+      <div class="carousel-track" id="carouselTrack">
+
+        
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=1200&q=80" alt="Балаяж — тёплые золотистые оттенки" loading="lazy" />
+          <div class="carousel-caption">
+            <span>Окрашивание</span>
+            Балаяж — тёплые золотистые оттенки
+          </div>
+        </div>
+        
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=1200&q=80" alt="Гель-лак с дизайном — нюдовый French" loading="lazy" />
+          <div class="carousel-caption">
+            <span>Ногтевой сервис</span>
+            Гель-лак с дизайном — нюдовый French
+          </div>
+        </div>
+        
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1200&q=80" alt="Вечерний образ — дымчатый глаз" loading="lazy" />
+          <div class="carousel-caption">
+            <span>Макияж</span>
+            Вечерний образ — дымчатый глаз
+          </div>
+        </div>
+        
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1200&q=80" alt="Каскад — объём и лёгкость" loading="lazy" />
+          <div class="carousel-caption">
+            <span>Стрижки</span>
+            Каскад — объём и лёгкость
+          </div>
+        </div>
+        
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&q=80" alt="Омбре — плавный переход от тёмного к светлому" loading="lazy" />
+          <div class="carousel-caption">
+            <span>Окрашивание</span>
+            Омбре — плавный переход от тёмного к светлому
+          </div>
+        </div>
+        
+
+      </div>
+
+      <button class="carousel-btn carousel-btn-prev" id="prevBtn" aria-label="Назад">&#8592;</button>
+      <button class="carousel-btn carousel-btn-next" id="nextBtn" aria-label="Вперёд">&#8594;</button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots"></div>
+  </div>
+</section>
+
+<!-- ===== GALLERY GRID ===== -->
+<section class="gallery-section">
+  <div class="container">
+    <h2 class="section-title fade-in">Все работы</h2>
+    <span class="gold-line fade-in"></span>
+
+    <div class="gallery-filter fade-in">
+      <button class="filter-btn active" data-filter="all">Все</button>
+      <button class="filter-btn" data-filter="hair">Волосы</button>
+      <button class="filter-btn" data-filter="nails">Ногти</button>
+      <button class="filter-btn" data-filter="makeup">Макияж</button>
+      <button class="filter-btn" data-filter="care">Уход</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      
+      <div class="gallery-item fade-in" data-category="hair" data-src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=75" alt="Балаяж" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="nails" data-src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=75" alt="Маникюр" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="makeup" data-src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=75" alt="Макияж" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="hair" data-src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=75" alt="Стрижка" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="hair" data-src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=75" alt="Омбре" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="care" data-src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=75" alt="Уход за кожей" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="nails" data-src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=75" alt="Дизайн ногтей" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="makeup" data-src="https://images.unsplash.com/photo-1523263685509-57c1d050d19b?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1523263685509-57c1d050d19b?w=600&q=75" alt="Свадебный макияж" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="hair" data-src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=75" alt="Укладка" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="care" data-src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=75" alt="SPA процедура" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="nails" data-src="https://images.unsplash.com/photo-1604072366595-e75dc92d6bdc?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1604072366595-e75dc92d6bdc?w=600&q=75" alt="Педикюр" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+      <div class="gallery-item fade-in" data-category="hair" data-src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=800&q=80">
+        <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=600&q=75" alt="Яркое окрашивание" loading="lazy" />
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding: 60px 0; text-align:center; background: var(--bg-secondary); border-top: 1px solid var(--border-gold);">
+  <div class="container">
+    <h2 class="fade-in" style="margin-bottom:0.5rem;">Понравились работы?</h2>
+    <span class="gold-line fade-in"></span>
+    <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:460px;">
+      Запишитесь на консультацию — и мы создадим ваш идеальный образ
+    </p>
+    <a href="/#contact" class="btn btn-gold fade-in">Записаться</a>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <img src="" alt="" id="lightboxImg" />
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+  </div>
+</div>
+
+
+  <footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="nav-logo">
+          Beauty<span>Studio</span>
+        </div>
+        <p>Мы создаём образы, которые вдохновляют. Премиум-сервис и атмосфера уюта в каждом визите.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="/">Главная</a></li>
+          <li><a href="/price.html">Прайс-лист</a></li>
+          <li><a href="/gallery.html">Галерея</a></li>
+          <li><a href="/#contact">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul class="footer-contacts">
+          <li><span class="ico">📍</span>ул. Красоты, 12, Киев, 01001</li>
+          <li><span class="ico">📞</span>+38 (044) 123-45-67</li>
+          <li><span class="ico">⏰</span>Пн–Пт: 9:00 — 21:00</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Beauty Studio. Все права защищены.</span>
+      <span>Создано с ❤️ для практики</span>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/js/script.js"></script>
+</body>
+</html>
