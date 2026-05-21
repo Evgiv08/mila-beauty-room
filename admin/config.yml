@@ -2,8 +2,7 @@
 # Документация: https://decapcms.org/docs/
 
 backend:
-  name: github
-  repo: evgiv08/mila-beauty-room
+  name: git-gateway
   branch: main
 
 media_folder: "assets/images"
