@@ -3,10 +3,9 @@
 
 backend:
   name: github
-  repo: evgiv08/mila-beauty-room   # ← замените на ваш GitHub логин/репозиторий
+  repo: evgiv08/mila-beauty-room
   branch: main
 
-# Загрузка изображений прямо в репозиторий
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
@@ -16,171 +15,108 @@ collections:
   - name: "settings"
     label: "⚙️ Настройки сайта"
     files:
-
-      - name: "general"
-        label: "Общие настройки"
+      - name: "contacts"
+        label: "Контакты и часы работы"
         file: "_config.yml"
         fields:
-          - label: "Название салона"
-            name: "salon.name"
-            widget: "string"
-          - label: "Адрес"
-            name: "salon.address"
-            widget: "string"
-          - label: "Телефон"
-            name: "salon.phone"
-            widget: "string"
-          - label: "Телефон 2"
-            name: "salon.phone2"
-            widget: "string"
-            required: false
-          - label: "Email"
-            name: "salon.email"
-            widget: "string"
-          - label: "Часы работы (будни)"
-            name: "salon.hours_weekdays"
-            widget: "string"
-          - label: "Часы работы (выходные)"
-            name: "salon.hours_weekends"
-            widget: "string"
-          - label: "Ссылка Instagram"
-            name: "salon.instagram"
-            widget: "string"
-          - label: "Ссылка Facebook"
-            name: "salon.facebook"
-            widget: "string"
+          - { label: "Название салона", name: "salon.name", widget: "string" }
+          - { label: "Адрес", name: "salon.address", widget: "string" }
+          - { label: "Телефон", name: "salon.phone", widget: "string" }
+          - { label: "Телефон 2", name: "salon.phone2", widget: "string", required: false }
+          - { label: "Email", name: "salon.email", widget: "string" }
+          - { label: "Часы (будни)", name: "salon.hours_weekdays", widget: "string" }
+          - { label: "Часы (выходные)", name: "salon.hours_weekends", widget: "string" }
+          - { label: "Ссылка Instagram", name: "salon.instagram", widget: "string" }
+          - { label: "Ссылка Facebook", name: "salon.facebook", widget: "string" }
 
       - name: "hero"
-        label: "Главная страница — Hero"
+        label: "Главная — Hero секция"
         file: "_config.yml"
         fields:
-          - label: "Надпись-тег (eyebrow)"
-            name: "hero.eyebrow"
-            widget: "string"
-          - label: "Заголовок"
-            name: "hero.title"
-            widget: "string"
-          - label: "Описание"
-            name: "hero.description"
-            widget: "text"
-          - label: "Фото (URL)"
-            name: "hero.image"
-            widget: "image"
+          - { label: "Тег-надпись (eyebrow)", name: "hero.eyebrow", widget: "string" }
+          - { label: "Заголовок", name: "hero.title", widget: "string" }
+          - { label: "Описание", name: "hero.description", widget: "text" }
+          - { label: "Фото", name: "hero.image", widget: "image" }
 
       - name: "about"
         label: "Блок «О нас»"
         file: "_config.yml"
         fields:
-          - label: "Заголовок"
-            name: "about.title"
-            widget: "string"
-          - label: "Первый абзац"
-            name: "about.text1"
-            widget: "text"
-          - label: "Второй абзац"
-            name: "about.text2"
-            widget: "text"
-          - label: "Фото (URL)"
-            name: "about.image"
-            widget: "image"
+          - { label: "Заголовок", name: "about.title", widget: "string" }
+          - { label: "Первый абзац", name: "about.text1", widget: "text" }
+          - { label: "Второй абзац", name: "about.text2", widget: "text" }
+          - { label: "Фото", name: "about.image", widget: "image" }
           - label: "Преимущества (список)"
             name: "about.features"
             widget: "list"
-            field:
-              label: "Пункт"
-              name: "item"
-              widget: "string"
+            field: { label: "Пункт", name: "item", widget: "string" }
 
-  # ─── 2. УСЛУГИ (главная страница) ─────────────────────────────
+  # ─── 2. УСЛУГИ ────────────────────────────────────────────────
   - name: "services"
     label: "✂️ Услуги (главная)"
-    file: "_data/services.yml"
-    fields:
-      - label: "Список услуг"
-        name: ""
-        widget: "list"
+    files:
+      - name: "services_list"
+        label: "Карточки услуг"
+        file: "_data/services.yml"
         fields:
-          - label: "Иконка (emoji)"
-            name: "icon"
-            widget: "string"
-          - label: "Название"
-            name: "title"
-            widget: "string"
-          - label: "Описание"
-            name: "description"
-            widget: "text"
+          - label: "Список услуг"
+            name: "list"
+            widget: "list"
+            fields:
+              - { label: "Иконка (emoji)", name: "icon", widget: "string" }
+              - { label: "Название", name: "title", widget: "string" }
+              - { label: "Описание", name: "description", widget: "text" }
 
   # ─── 3. ПРАЙС-ЛИСТ ────────────────────────────────────────────
   - name: "price"
     label: "💰 Прайс-лист"
-    file: "_data/price.yml"
-    fields:
-      - label: "Категории услуг"
-        name: ""
-        widget: "list"
+    files:
+      - name: "price_list"
+        label: "Категории и цены"
+        file: "_data/price.yml"
         fields:
-          - label: "Иконка (emoji)"
-            name: "icon"
-            widget: "string"
-          - label: "Название категории"
-            name: "title"
-            widget: "string"
-          - label: "Позиции"
-            name: "items"
+          - label: "Категории услуг"
+            name: "categories"
             widget: "list"
             fields:
-              - label: "Название услуги"
-                name: "name"
-                widget: "string"
-              - label: "Описание"
-                name: "description"
-                widget: "string"
-                required: false
-              - label: "Длительность"
-                name: "duration"
-                widget: "string"
-                required: false
-              - label: "Цена"
-                name: "price"
-                widget: "string"
+              - { label: "Иконка (emoji)", name: "icon", widget: "string" }
+              - { label: "Название категории", name: "title", widget: "string" }
+              - label: "Позиции"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Название услуги", name: "name", widget: "string" }
+                  - { label: "Описание", name: "description", widget: "string", required: false }
+                  - { label: "Длительность", name: "duration", widget: "string", required: false }
+                  - { label: "Цена", name: "price", widget: "string" }
 
   # ─── 4. ГАЛЕРЕЯ ───────────────────────────────────────────────
   - name: "gallery"
     label: "🖼️ Галерея"
-    file: "_data/gallery.yml"
-    fields:
-      - label: "Карусель (слайдер)"
-        name: "carousel"
-        widget: "list"
+    files:
+      - name: "gallery_data"
+        label: "Фотографии"
+        file: "_data/gallery.yml"
         fields:
-          - label: "Изображение"
-            name: "image"
-            widget: "image"
-          - label: "Категория (подпись)"
-            name: "category_label"
-            widget: "string"
-          - label: "Текст подписи"
-            name: "caption"
-            widget: "string"
-
-      - label: "Сетка фотографий"
-        name: "grid"
-        widget: "list"
-        fields:
-          - label: "Превью (миниатюра)"
-            name: "image"
-            widget: "image"
-          - label: "Полный размер"
-            name: "image_full"
-            widget: "image"
-          - label: "Alt-текст"
-            name: "alt"
-            widget: "string"
-          - label: "Категория"
-            name: "category"
-            widget: "select"
-            options:
-              - { label: "Волосы", value: "hair" }
-              - { label: "Ногти", value: "nails" }
-              - { label: "Макияж", value: "makeup" }
-              - { label: "Уход", value: "care" }
+          - label: "Карусель (слайдер)"
+            name: "carousel"
+            widget: "list"
+            fields:
+              - { label: "Изображение", name: "image", widget: "image" }
+              - { label: "Категория (подпись)", name: "category_label", widget: "string" }
+              - { label: "Текст подписи", name: "caption", widget: "string" }
+          - label: "Сетка фотографий"
+            name: "grid"
+            widget: "list"
+            fields:
+              - { label: "Превью", name: "image", widget: "image" }
+              - { label: "Полный размер", name: "image_full", widget: "image" }
+              - { label: "Alt-текст", name: "alt", widget: "string" }
+              - label: "Категория"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "Волосы", value: "hair" }
+                  - { label: "Ногти", value: "nails" }
+                  - { label: "Макияж", value: "makeup" }
+                  - { label: "Уход", value: "care" }
