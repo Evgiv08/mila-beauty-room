@@ -1,0 +1,31 @@
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="{{ '/' | relative_url }}" class="nav-logo">
+        {{ site.salon.name | split: ' ' | first }}<span>{{ site.salon.name | split: ' ' | last }}</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.url == '/index.html' %} class="active"{% endif %}>Главная</a></li>
+        <li><a href="{{ '/price.html' | relative_url }}"{% if page.url contains 'price' %} class="active"{% endif %}>Прайс</a></li>
+        <li><a href="{{ '/gallery.html' | relative_url }}"{% if page.url contains 'gallery' %} class="active"{% endif %}>Галерея</a></li>
+        <li>
+          <a href="{{ '/#contact' | relative_url }}" class="btn btn-outline" style="padding:8px 22px;font-size:0.8rem;">
+            Записаться
+          </a>
+        </li>
+      </ul>
+
+      <button class="nav-burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.url == '/index.html' %} class="active"{% endif %}>Главная</a>
+      <a href="{{ '/price.html' | relative_url }}"{% if page.url contains 'price' %} class="active"{% endif %}>Прайс</a>
+      <a href="{{ '/gallery.html' | relative_url }}"{% if page.url contains 'gallery' %} class="active"{% endif %}>Галерея</a>
+      <a href="{{ '/#contact' | relative_url }}">Записаться</a>
+    </div>
+  </div>
+</nav>

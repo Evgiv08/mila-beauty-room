@@ -1,0 +1,37 @@
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="nav-logo">
+          {{ site.salon.name | split: ' ' | first }}<span>{{ site.salon.name | split: ' ' | last }}</span>
+        </div>
+        <p>Мы создаём образы, которые вдохновляют. Премиум-сервис и атмосфера уюта в каждом визите.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="{{ '/' | relative_url }}">Главная</a></li>
+          <li><a href="{{ '/price.html' | relative_url }}">Прайс-лист</a></li>
+          <li><a href="{{ '/gallery.html' | relative_url }}">Галерея</a></li>
+          <li><a href="{{ '/#contact' | relative_url }}">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul class="footer-contacts">
+          <li><span class="ico">📍</span>{{ site.salon.address }}</li>
+          <li><span class="ico">📞</span>{{ site.salon.phone }}</li>
+          <li><span class="ico">⏰</span>{{ site.salon.hours_weekdays }}</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ 'now' | date: "%Y" }} {{ site.salon.name }}. Все права защищены.</span>
+      <span>Создано с ❤️ для практики</span>
+    </div>
+  </div>
+</footer>

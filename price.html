@@ -1,0 +1,60 @@
+---
+layout: default
+title: "Прайс-лист"
+description: "Актуальный прайс-лист салона Beauty Studio. Стрижки, окрашивание, маникюр, макияж."
+---
+
+<!-- ===== PAGE HERO ===== -->
+<div class="page-hero">
+  <div class="container">
+    <span class="hero-eyebrow">✦ Актуальные цены</span>
+    <h1 class="section-title">Прайс-лист</h1>
+    <span class="gold-line"></span>
+    <p class="section-subtitle">Все цены указаны в гривнах. Консультация мастера — бесплатно.</p>
+  </div>
+</div>
+
+<!-- ===== PRICE CONTENT ===== -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="price-categories">
+
+      {% for category in site.data.price %}
+      <div class="price-category fade-in">
+        <div class="price-category-header">
+          <div class="price-category-icon">{{ category.icon }}</div>
+          <div>
+            <h2>{{ category.title }}</h2>
+          </div>
+        </div>
+        <div class="price-list">
+          {% for item in category.items %}
+          <div class="price-item">
+            <div>
+              <div class="price-name">{{ item.name }}</div>
+              {% if item.description %}
+              <div class="price-desc">{{ item.description }}</div>
+              {% endif %}
+            </div>
+            {% if item.duration %}
+            <span class="price-duration">{{ item.duration }}</span>
+            {% endif %}
+            <span class="price-value">{{ item.price }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <p class="price-note fade-in">
+      * Цены могут варьироваться в зависимости от длины и густоты волос, сложности работы.<br>
+      Точную стоимость рассчитает мастер на бесплатной консультации.
+    </p>
+
+    <div style="text-align:center; margin-top: 48px;" class="fade-in">
+      <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold">Записаться на консультацию</a>
+    </div>
+  </div>
+</section>

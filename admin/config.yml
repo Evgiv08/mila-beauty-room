@@ -1,0 +1,186 @@
+# Decap CMS — конфигурация
+# Документация: https://decapcms.org/docs/
+
+backend:
+  name: github
+  repo: ВАШ_ЛОГИН/beauty-studio   # ← замените на ваш GitHub логин/репозиторий
+  branch: main
+
+# Загрузка изображений прямо в репозиторий
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+
+  # ─── 1. НАСТРОЙКИ САЙТА ───────────────────────────────────────
+  - name: "settings"
+    label: "⚙️ Настройки сайта"
+    files:
+
+      - name: "general"
+        label: "Общие настройки"
+        file: "_config.yml"
+        fields:
+          - label: "Название салона"
+            name: "salon.name"
+            widget: "string"
+          - label: "Адрес"
+            name: "salon.address"
+            widget: "string"
+          - label: "Телефон"
+            name: "salon.phone"
+            widget: "string"
+          - label: "Телефон 2"
+            name: "salon.phone2"
+            widget: "string"
+            required: false
+          - label: "Email"
+            name: "salon.email"
+            widget: "string"
+          - label: "Часы работы (будни)"
+            name: "salon.hours_weekdays"
+            widget: "string"
+          - label: "Часы работы (выходные)"
+            name: "salon.hours_weekends"
+            widget: "string"
+          - label: "Ссылка Instagram"
+            name: "salon.instagram"
+            widget: "string"
+          - label: "Ссылка Facebook"
+            name: "salon.facebook"
+            widget: "string"
+
+      - name: "hero"
+        label: "Главная страница — Hero"
+        file: "_config.yml"
+        fields:
+          - label: "Надпись-тег (eyebrow)"
+            name: "hero.eyebrow"
+            widget: "string"
+          - label: "Заголовок"
+            name: "hero.title"
+            widget: "string"
+          - label: "Описание"
+            name: "hero.description"
+            widget: "text"
+          - label: "Фото (URL)"
+            name: "hero.image"
+            widget: "image"
+
+      - name: "about"
+        label: "Блок «О нас»"
+        file: "_config.yml"
+        fields:
+          - label: "Заголовок"
+            name: "about.title"
+            widget: "string"
+          - label: "Первый абзац"
+            name: "about.text1"
+            widget: "text"
+          - label: "Второй абзац"
+            name: "about.text2"
+            widget: "text"
+          - label: "Фото (URL)"
+            name: "about.image"
+            widget: "image"
+          - label: "Преимущества (список)"
+            name: "about.features"
+            widget: "list"
+            field:
+              label: "Пункт"
+              name: "item"
+              widget: "string"
+
+  # ─── 2. УСЛУГИ (главная страница) ─────────────────────────────
+  - name: "services"
+    label: "✂️ Услуги (главная)"
+    file: "_data/services.yml"
+    fields:
+      - label: "Список услуг"
+        name: ""
+        widget: "list"
+        fields:
+          - label: "Иконка (emoji)"
+            name: "icon"
+            widget: "string"
+          - label: "Название"
+            name: "title"
+            widget: "string"
+          - label: "Описание"
+            name: "description"
+            widget: "text"
+
+  # ─── 3. ПРАЙС-ЛИСТ ────────────────────────────────────────────
+  - name: "price"
+    label: "💰 Прайс-лист"
+    file: "_data/price.yml"
+    fields:
+      - label: "Категории услуг"
+        name: ""
+        widget: "list"
+        fields:
+          - label: "Иконка (emoji)"
+            name: "icon"
+            widget: "string"
+          - label: "Название категории"
+            name: "title"
+            widget: "string"
+          - label: "Позиции"
+            name: "items"
+            widget: "list"
+            fields:
+              - label: "Название услуги"
+                name: "name"
+                widget: "string"
+              - label: "Описание"
+                name: "description"
+                widget: "string"
+                required: false
+              - label: "Длительность"
+                name: "duration"
+                widget: "string"
+                required: false
+              - label: "Цена"
+                name: "price"
+                widget: "string"
+
+  # ─── 4. ГАЛЕРЕЯ ───────────────────────────────────────────────
+  - name: "gallery"
+    label: "🖼️ Галерея"
+    file: "_data/gallery.yml"
+    fields:
+      - label: "Карусель (слайдер)"
+        name: "carousel"
+        widget: "list"
+        fields:
+          - label: "Изображение"
+            name: "image"
+            widget: "image"
+          - label: "Категория (подпись)"
+            name: "category_label"
+            widget: "string"
+          - label: "Текст подписи"
+            name: "caption"
+            widget: "string"
+
+      - label: "Сетка фотографий"
+        name: "grid"
+        widget: "list"
+        fields:
+          - label: "Превью (миниатюра)"
+            name: "image"
+            widget: "image"
+          - label: "Полный размер"
+            name: "image_full"
+            widget: "image"
+          - label: "Alt-текст"
+            name: "alt"
+            widget: "string"
+          - label: "Категория"
+            name: "category"
+            widget: "select"
+            options:
+              - { label: "Волосы", value: "hair" }
+              - { label: "Ногти", value: "nails" }
+              - { label: "Макияж", value: "makeup" }
+              - { label: "Уход", value: "care" }

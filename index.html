@@ -1,0 +1,142 @@
+---
+layout: default
+title: "Салон красоты"
+description: "Beauty Studio — элитный салон красоты. Стрижки, окрашивание, уход за кожей и ногтевой сервис."
+---
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <span class="hero-eyebrow">{{ site.hero.eyebrow }}</span>
+        <h1 class="hero-title">{{ site.hero.title }}</h1>
+        <p class="hero-desc">{{ site.hero.description }}</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-gold">Записаться онлайн</a>
+          <a href="{{ '/price.html' | relative_url }}" class="btn btn-outline">Прайс-лист</a>
+        </div>
+
+        <div class="hero-stats">
+          {% for stat in site.hero.stats %}
+          <div>
+            <div class="stat-num">{{ stat.num }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <div class="hero-image-frame">
+          <img src="{{ site.hero.image }}" alt="{{ site.salon.name }}" loading="eager" />
+        </div>
+        <div class="hero-badge">
+          <div class="hero-badge-num">★ 4.9</div>
+          <div class="hero-badge-text">рейтинг клиентов</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services" style="background: var(--bg-secondary);">
+  <div class="container">
+    <h2 class="section-title fade-in">Наши услуги</h2>
+    <span class="gold-line fade-in"></span>
+    <p class="section-subtitle fade-in">Всё для вашей красоты под одной крышей</p>
+
+    <div class="services-grid">
+      {% for service in site.data.services %}
+      <div class="service-card fade-in">
+        <span class="service-icon">{{ service.icon }}</span>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap fade-in">
+        <img src="{{ site.about.image }}" alt="Мастера {{ site.salon.name }}" loading="lazy" />
+        <div class="about-deco"></div>
+      </div>
+
+      <div class="about-content fade-in">
+        <span class="hero-eyebrow">{{ site.about.eyebrow }}</span>
+        <h2>{{ site.about.title }}</h2>
+        <p>{{ site.about.text1 }}</p>
+        <p>{{ site.about.text2 }}</p>
+
+        <ul class="features-list">
+          {% for feature in site.about.features %}
+          <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+
+        <a href="{{ '/gallery.html' | relative_url }}" class="btn btn-gold" style="margin-top: 1rem;">
+          Смотреть галерею
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA STRIP ===== -->
+<section style="padding: 60px 0; background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04)); border-top: 1px solid var(--border-gold); border-bottom: 1px solid var(--border-gold);">
+  <div class="container" style="text-align:center;">
+    <h2 class="fade-in">Готовы к новому образу?</h2>
+    <span class="gold-line fade-in"></span>
+    <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:500px; font-size:1.05rem;">
+      Запишитесь сейчас и получите бесплатную консультацию мастера
+    </p>
+    <a href="#contact" class="btn btn-gold fade-in">Записаться бесплатно</a>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" style="background: var(--bg-secondary);">
+  <div class="container">
+    <h2 class="section-title fade-in">Контакты</h2>
+    <span class="gold-line fade-in"></span>
+    <p class="section-subtitle fade-in">Мы всегда рады вам помочь</p>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:32px; margin-top: 1rem;">
+      <div class="service-card fade-in" style="text-align:left;">
+        <span class="service-icon">📍</span>
+        <h3 style="margin-bottom:0.5rem;">Адрес</h3>
+        <p>{{ site.salon.address }}</p>
+      </div>
+      <div class="service-card fade-in" style="text-align:left;">
+        <span class="service-icon">📞</span>
+        <h3 style="margin-bottom:0.5rem;">Телефон</h3>
+        <p><a href="tel:+380441234567">{{ site.salon.phone }}</a></p>
+        {% if site.salon.phone2 %}
+        <p><a href="tel:+380501234567">{{ site.salon.phone2 }}</a></p>
+        {% endif %}
+      </div>
+      <div class="service-card fade-in" style="text-align:left;">
+        <span class="service-icon">⏰</span>
+        <h3 style="margin-bottom:0.5rem;">Часы работы</h3>
+        <p>{{ site.salon.hours_weekdays }}</p>
+        <p>{{ site.salon.hours_weekends }}</p>
+      </div>
+      <div class="service-card fade-in" style="text-align:left;">
+        <span class="service-icon">✉️</span>
+        <h3 style="margin-bottom:0.5rem;">Email / Соцсети</h3>
+        <p><a href="mailto:{{ site.salon.email }}">{{ site.salon.email }}</a></p>
+        <p style="margin-top:6px;">
+          <a href="{{ site.salon.instagram }}">Instagram</a> &nbsp;·&nbsp;
+          <a href="{{ site.salon.facebook }}">Facebook</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
