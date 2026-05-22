@@ -42,6 +42,8 @@ bundle install
 
 # Запустить сервер
 bundle exec jekyll serve
+# or
+bundle exec jekyll serve --baseurl ""
 # Сайт: http://localhost:4000
 ```
 

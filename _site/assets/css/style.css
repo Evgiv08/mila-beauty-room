@@ -503,7 +503,7 @@ section { padding: 60px 0; }
    PRICE PAGE
    ============================================= */
 .page-hero {
-  padding: 140px 0 60px;
+  padding: 140px 0 0;
   text-align: center;
   position: relative;
   background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,0.06), transparent);
@@ -564,12 +564,12 @@ section { padding: 60px 0; }
 .price-item:last-child { border-bottom: none; }
 
 .price-name {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-primary);
 }
 
 .price-desc {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--text-muted);
   margin-top: 3px;
 }
@@ -600,7 +600,7 @@ section { padding: 60px 0; }
 /* =============================================
    GALLERY PAGE — CAROUSEL
    ============================================= */
-.carousel-section { padding-bottom: 0; }
+.carousel-section { padding-bottom: 0; padding-top: 0; }
 
 .carousel-wrap {
   position: relative;
