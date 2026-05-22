@@ -4,9 +4,11 @@
 
       <div class="footer-brand">
         <div class="nav-logo">
-          {{ site.salon.name | split: ' ' | first }}<span>{{ site.salon.name | split: ' ' | last }}</span>
+          {{ site.data.header.salon_name | split: ' ' | first }}<span>{{ site.data.header.salon_name | split: ' ' | last }}</span>
         </div>
-        <p>Мы создаём образы, которые вдохновляют. Премиум-сервис и атмосфера уюта в каждом визите.</p>
+        {% if site.data.header.footer_tagline %}
+        <p>{{ site.data.header.footer_tagline }}</p>
+        {% endif %}
       </div>
 
       <div class="footer-col">
@@ -22,15 +24,21 @@
       <div class="footer-col">
         <h4>Контакты</h4>
         <ul class="footer-contacts">
-          <li><span class="ico">📍</span>{{ site.salon.address }}</li>
-          <li><span class="ico">📞</span>{{ site.salon.phone }}</li>
-          <li><span class="ico">⏰</span>{{ site.salon.hours_weekdays }}</li>
+          {% if site.data.contacts.address %}
+          <li><span class="ico">📍</span>{{ site.data.contacts.address }}</li>
+          {% endif %}
+          {% if site.data.contacts.phone %}
+          <li><span class="ico">📞</span>{{ site.data.contacts.phone }}</li>
+          {% endif %}
+          {% if site.data.contacts.hours_weekdays %}
+          <li><span class="ico">⏰</span>{{ site.data.contacts.hours_weekdays }}</li>
+          {% endif %}
         </ul>
       </div>
 
     </div>
     <div class="footer-bottom">
-      <span>© {{ 'now' | date: "%Y" }} {{ site.salon.name }}. Все права защищены.</span>
+      <span>© {{ 'now' | date: "%Y" }} {{ site.data.header.salon_name }}. Все права защищены.</span>
       <span>Создано с ❤️ для практики</span>
     </div>
   </div>

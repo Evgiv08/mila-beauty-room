@@ -1,0 +1,12 @@
+# Контакты салона
+# Используются в секции "Контакты" на главной и в футере
+
+name: "Beauty Studio"
+address: "ул. Красоты, 12, Киев, 01001"
+phone: "+38 (044) 123-45-67"
+phone2: "+38 (050) 123-45-67"
+email: "hello@beauty-studio.com"
+hours_weekdays: "Пн–Пт: 9:00 — 21:00"
+hours_weekends: "Сб–Вс: 10:00 — 19:00"
+instagram: "#"
+facebook: "#"

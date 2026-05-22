@@ -7,14 +7,21 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="container">
-    <span class="hero-eyebrow">✦ Наши работы</span>
-    <h1 class="section-title">Галерея</h1>
+    {% if site.data.page_gallery.eyebrow %}
+    <span class="hero-eyebrow">{{ site.data.page_gallery.eyebrow }}</span>
+    {% endif %}
+    {% if site.data.page_gallery.title %}
+    <h1 class="section-title">{{ site.data.page_gallery.title }}</h1>
+    {% endif %}
     <span class="gold-line"></span>
-    <p class="section-subtitle">Каждая работа — уникальный образ, созданный с любовью</p>
+    {% if site.data.page_gallery.subtitle %}
+    <p class="section-subtitle">{{ site.data.page_gallery.subtitle }}</p>
+    {% endif %}
   </div>
 </div>
 
 <!-- ===== CAROUSEL ===== -->
+{% if site.data.gallery.carousel %}
 <section class="carousel-section">
   <div class="container">
     <div class="carousel-wrap" id="mainCarousel">
@@ -22,11 +29,15 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 
         {% for slide in site.data.gallery.carousel %}
         <div class="carousel-slide">
+          {% if slide.image %}
           <img src="{{ slide.image }}" alt="{{ slide.caption }}" loading="lazy" />
+          {% endif %}
+          {% if slide.category_label or slide.caption %}
           <div class="carousel-caption">
-            <span>{{ slide.category_label }}</span>
+            {% if slide.category_label %}<span>{{ slide.category_label }}</span>{% endif %}
             {{ slide.caption }}
           </div>
+          {% endif %}
         </div>
         {% endfor %}
 
@@ -39,11 +50,14 @@ description: "Галерея работ мастеров Beauty Studio. Стри
     <div class="carousel-dots" id="carouselDots"></div>
   </div>
 </section>
+{% endif %}
 
 <!-- ===== GALLERY GRID ===== -->
 <section class="gallery-section">
   <div class="container">
-    <h2 class="section-title fade-in">Все работы</h2>
+    {% if site.data.page_gallery.grid_title %}
+    <h2 class="section-title fade-in">{{ site.data.page_gallery.grid_title }}</h2>
+    {% endif %}
     <span class="gold-line fade-in"></span>
 
     <div class="gallery-filter fade-in">
@@ -57,7 +71,9 @@ description: "Галерея работ мастеров Beauty Studio. Стри
     <div class="gallery-grid" id="galleryGrid">
       {% for photo in site.data.gallery.grid %}
       <div class="gallery-item fade-in" data-category="{{ photo.category }}" data-src="{{ photo.image_full }}">
+        {% if photo.image %}
         <img src="{{ photo.image }}" alt="{{ photo.alt }}" loading="lazy" />
+        {% endif %}
         <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
       </div>
       {% endfor %}
@@ -66,16 +82,22 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 </section>
 
 <!-- CTA -->
+{% if site.data.page_gallery.cta_title %}
 <section style="padding: 60px 0; text-align:center; background: var(--bg-secondary); border-top: 1px solid var(--border-gold);">
   <div class="container">
-    <h2 class="fade-in" style="margin-bottom:0.5rem;">Понравились работы?</h2>
+    <h2 class="fade-in" style="margin-bottom:0.5rem;">{{ site.data.page_gallery.cta_title }}</h2>
     <span class="gold-line fade-in"></span>
+    {% if site.data.page_gallery.cta_subtitle %}
     <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:460px;">
-      Запишитесь на консультацию — и мы создадим ваш идеальный образ
+      {{ site.data.page_gallery.cta_subtitle }}
     </p>
-    <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold fade-in">Записаться</a>
+    {% endif %}
+    {% if site.data.page_gallery.cta_button %}
+    <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold fade-in">{{ site.data.page_gallery.cta_button }}</a>
+    {% endif %}
   </div>
 </section>
+{% endif %}
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">

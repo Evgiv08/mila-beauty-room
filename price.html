@@ -7,10 +7,16 @@ description: "Актуальный прайс-лист салона Beauty Studi
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="container">
-    <span class="hero-eyebrow">✦ Актуальные цены</span>
-    <h1 class="section-title">Прайс-лист</h1>
+    {% if site.data.page_price.eyebrow %}
+    <span class="hero-eyebrow">{{ site.data.page_price.eyebrow }}</span>
+    {% endif %}
+    {% if site.data.page_price.title %}
+    <h1 class="section-title">{{ site.data.page_price.title }}</h1>
+    {% endif %}
     <span class="gold-line"></span>
-    <p class="section-subtitle">Все цены указаны в гривнах. Консультация мастера — бесплатно.</p>
+    {% if site.data.page_price.subtitle %}
+    <p class="section-subtitle">{{ site.data.page_price.subtitle }}</p>
+    {% endif %}
   </div>
 </div>
 
@@ -22,16 +28,14 @@ description: "Актуальный прайс-лист салона Beauty Studi
       {% for category in site.data.price.categories %}
       <div class="price-category fade-in">
         <div class="price-category-header">
-          <div class="price-category-icon">{{ category.icon }}</div>
-          <div>
-            <h2>{{ category.title }}</h2>
-          </div>
+          {% if category.icon %}<div class="price-category-icon">{{ category.icon }}</div>{% endif %}
+          {% if category.title %}<div><h2>{{ category.title }}</h2></div>{% endif %}
         </div>
         <div class="price-list">
           {% for item in category.items %}
           <div class="price-item">
             <div>
-              <div class="price-name">{{ item.name }}</div>
+              {% if item.name %}<div class="price-name">{{ item.name }}</div>{% endif %}
               {% if item.description %}
               <div class="price-desc">{{ item.description }}</div>
               {% endif %}
@@ -39,7 +43,9 @@ description: "Актуальный прайс-лист салона Beauty Studi
             {% if item.duration %}
             <span class="price-duration">{{ item.duration }}</span>
             {% endif %}
+            {% if item.price %}
             <span class="price-value">{{ item.price }}</span>
+            {% endif %}
           </div>
           {% endfor %}
         </div>
@@ -48,13 +54,14 @@ description: "Актуальный прайс-лист салона Beauty Studi
 
     </div>
 
-    <p class="price-note fade-in">
-      * Цены могут варьироваться в зависимости от длины и густоты волос, сложности работы.<br>
-      Точную стоимость рассчитает мастер на бесплатной консультации.
-    </p>
+    {% if site.data.page_price.footer_note %}
+    <p class="price-note fade-in">{{ site.data.page_price.footer_note }}</p>
+    {% endif %}
 
+    {% if site.data.page_price.cta_button %}
     <div style="text-align:center; margin-top: 48px;" class="fade-in">
-      <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold">Записаться на консультацию</a>
+      <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold">{{ site.data.page_price.cta_button }}</a>
     </div>
+    {% endif %}
   </div>
 </section>
