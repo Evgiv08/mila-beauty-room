@@ -63,7 +63,7 @@ h3 { font-size: 1.4rem; }
 .section-subtitle {
   text-align: center;
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   margin-bottom: 3rem;
   font-style: italic;
 }
@@ -128,7 +128,7 @@ section { padding: 60px 0; }
 
 .nav-links a {
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 0.92rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   position: relative;
@@ -204,7 +204,7 @@ section { padding: 60px 0; }
   padding: 14px 36px;
   border-radius: var(--radius);
   font-family: inherit;
-  font-size: 1.2rem;
+  font-size: 0.88rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
@@ -248,7 +248,7 @@ section { padding: 60px 0; }
   position: relative;
   overflow: hidden;
   background: var(--bg-primary);
-  padding-top: 100px;
+  padding-top: 70px;
 }
 
 .hero-bg {
@@ -293,7 +293,7 @@ section { padding: 60px 0; }
 
 .hero-desc {
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 2.2rem;
   max-width: 440px;
 }
@@ -422,7 +422,7 @@ section { padding: 60px 0; }
 
 .service-card p {
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 0.95rem;
 }
 
 /* =============================================
@@ -473,7 +473,7 @@ section { padding: 60px 0; }
 .about-content p {
   color: var(--text-muted);
   margin-bottom: 1.2rem;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
 }
 
 .features-list {
@@ -488,7 +488,7 @@ section { padding: 60px 0; }
   align-items: center;
   gap: 12px;
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 0.95rem;
 }
 
 .features-list li::before {
@@ -912,7 +912,6 @@ footer {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .price-category-header { padding: 20px 24px; }
   .price-list { padding: 0 24px 8px; }
-  .hero { min-height: auto; }
 }
 
 @media (max-width: 767px) {
