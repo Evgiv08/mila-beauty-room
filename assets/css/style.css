@@ -248,7 +248,7 @@ section { padding: 60px 0; }
   position: relative;
   overflow: hidden;
   background: var(--bg-primary);
-  padding-top: 70px;
+  padding-top: 100px;
 }
 
 .hero-bg {
@@ -912,6 +912,7 @@ footer {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .price-category-header { padding: 20px 24px; }
   .price-list { padding: 0 24px 8px; }
+  .hero { min-height: auto; }
 }
 
 @media (max-width: 767px) {

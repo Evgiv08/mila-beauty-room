@@ -51,7 +51,7 @@ bundle exec jekyll serve
 git init
 git add .
 git commit -m "Initial Jekyll commit"
-git remote add origin https://github.com/ВАШ_ЛОГИН/beauty-studio.git
+git remote add origin https://github.com/evgiv08/mila-beauty-room.git
 git branch -M main
 git push -u origin main
 ```
