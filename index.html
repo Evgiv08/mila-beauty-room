@@ -10,25 +10,25 @@ description: "Beauty Studio — элитный салон красоты. Стр
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
-        {% if site.data.hero.eyebrow %}
+        {% if site.data.hero.eyebrow != blank %}
         <span class="hero-eyebrow">{{ site.data.hero.eyebrow }}</span>
         {% endif %}
-        {% if site.data.hero.title %}
+        {% if site.data.hero.title != blank %}
         <h1 class="hero-title">{{ site.data.hero.title }}</h1>
         {% endif %}
-        {% if site.data.hero.description %}
+        {% if site.data.hero.description != blank %}
         <p class="hero-desc">{{ site.data.hero.description }}</p>
         {% endif %}
         <div class="hero-actions">
-          {% if site.data.hero.button_primary %}
+          {% if site.data.hero.button_primary != blank %}
           <a href="#contact" class="btn btn-gold">{{ site.data.hero.button_primary }}</a>
           {% endif %}
-          {% if site.data.hero.button_secondary %}
+          {% if site.data.hero.button_secondary != blank %}
           <a href="{{ '/price.html' | relative_url }}" class="btn btn-outline">{{ site.data.hero.button_secondary }}</a>
           {% endif %}
         </div>
 
-        {% if site.data.hero.stats %}
+        {% if site.data.hero.stats != blank %}
         <div class="hero-stats">
           {% for stat in site.data.hero.stats %}
           <div>
@@ -41,15 +41,15 @@ description: "Beauty Studio — элитный салон красоты. Стр
       </div>
 
       <div class="hero-image">
-        {% if site.data.hero.image %}
+        {% if site.data.hero.image != blank %}
         <div class="hero-image-frame">
           <img src="{{ site.data.hero.image }}" alt="{{ site.data.contacts.name }}" loading="eager" />
         </div>
         {% endif %}
-        {% if site.data.hero.rating_num %}
+        {% if site.data.hero.rating_num != blank %}
         <div class="hero-badge">
           <div class="hero-badge-num">{{ site.data.hero.rating_num }}</div>
-          {% if site.data.hero.rating_label %}
+          {% if site.data.hero.rating_label != blank %}
           <div class="hero-badge-text">{{ site.data.hero.rating_label }}</div>
           {% endif %}
         </div>
@@ -60,7 +60,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
 </section>
 
 <!-- ===== SERVICES ===== -->
-{% if site.data.services.list %}
+{% if site.data.services.list != blank %}
 <section id="services" style="background: var(--bg-secondary);">
   <div class="container">
     <h2 class="section-title fade-in">Наши услуги</h2>
@@ -70,9 +70,9 @@ description: "Beauty Studio — элитный салон красоты. Стр
     <div class="services-grid">
       {% for service in site.data.services.list %}
       <div class="service-card fade-in">
-        {% if service.icon %}<span class="service-icon">{{ service.icon }}</span>{% endif %}
-        {% if service.title %}<h3>{{ service.title }}</h3>{% endif %}
-        {% if service.description %}<p>{{ service.description }}</p>{% endif %}
+        {% if service.icon != blank %}<span class="service-icon">{{ service.icon }}</span>{% endif %}
+        {% if service.title != blank %}<h3>{{ service.title }}</h3>{% endif %}
+        {% if service.description != blank %}<p>{{ service.description }}</p>{% endif %}
       </div>
       {% endfor %}
     </div>
@@ -84,7 +84,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
 <section id="about">
   <div class="container">
     <div class="about-grid">
-      {% if site.data.about.image %}
+      {% if site.data.about.image != blank %}
       <div class="about-image-wrap fade-in">
         <img src="{{ site.data.about.image }}" alt="Мастера {{ site.data.contacts.name }}" loading="lazy" />
         <div class="about-deco"></div>
@@ -92,20 +92,20 @@ description: "Beauty Studio — элитный салон красоты. Стр
       {% endif %}
 
       <div class="about-content fade-in">
-        {% if site.data.about.eyebrow %}
+        {% if site.data.about.eyebrow != blank %}
         <span class="hero-eyebrow">{{ site.data.about.eyebrow }}</span>
         {% endif %}
-        {% if site.data.about.title %}
+        {% if site.data.about.title != blank %}
         <h2>{{ site.data.about.title }}</h2>
         {% endif %}
-        {% if site.data.about.text1 %}
+        {% if site.data.about.text1 != blank %}
         <p>{{ site.data.about.text1 }}</p>
         {% endif %}
-        {% if site.data.about.text2 %}
+        {% if site.data.about.text2 != blank %}
         <p>{{ site.data.about.text2 }}</p>
         {% endif %}
 
-        {% if site.data.about.features %}
+        {% if site.data.about.features != blank %}
         <ul class="features-list">
           {% for feature in site.data.about.features %}
           <li>{{ feature }}</li>
@@ -113,7 +113,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
         </ul>
         {% endif %}
 
-        {% if site.data.about.gallery_button %}
+        {% if site.data.about.gallery_button != blank %}
         <a href="{{ '/gallery.html' | relative_url }}" class="btn btn-gold" style="margin-top: 1rem;">
           {{ site.data.about.gallery_button }}
         </a>
@@ -124,17 +124,17 @@ description: "Beauty Studio — элитный салон красоты. Стр
 </section>
 
 <!-- ===== CTA STRIP ===== -->
-{% if site.data.cta.title %}
+{% if site.data.cta.title != blank %}
 <section style="padding: 60px 0; background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04)); border-top: 1px solid var(--border-gold); border-bottom: 1px solid var(--border-gold);">
   <div class="container" style="text-align:center;">
     <h2 class="fade-in">{{ site.data.cta.title }}</h2>
     <span class="gold-line fade-in"></span>
-    {% if site.data.cta.subtitle %}
+    {% if site.data.cta.subtitle != blank %}
     <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:500px; font-size:1.05rem;">
       {{ site.data.cta.subtitle }}
     </p>
     {% endif %}
-    {% if site.data.cta.button %}
+    {% if site.data.cta.button != blank %}
     <a href="#contact" class="btn btn-gold fade-in">{{ site.data.cta.button }}</a>
     {% endif %}
   </div>
@@ -149,43 +149,43 @@ description: "Beauty Studio — элитный салон красоты. Стр
     <p class="section-subtitle fade-in">Мы всегда рады вам помочь</p>
 
     <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:32px; margin-top: 1rem;">
-      {% if site.data.contacts.address %}
+      {% if site.data.contacts.address != blank %}
       <div class="service-card fade-in" style="text-align:left;">
         <span class="service-icon">📍</span>
         <h3 style="margin-bottom:0.5rem;">Адрес</h3>
         <p>{{ site.data.contacts.address }}</p>
       </div>
       {% endif %}
-      {% if site.data.contacts.phone %}
+      {% if site.data.contacts.phone != blank %}
       <div class="service-card fade-in" style="text-align:left;">
         <span class="service-icon">📞</span>
         <h3 style="margin-bottom:0.5rem;">Телефон</h3>
         <p><a href="tel:{{ site.data.contacts.phone }}">{{ site.data.contacts.phone }}</a></p>
-        {% if site.data.contacts.phone2 %}
+        {% if site.data.contacts.phone2 != blank %}
         <p><a href="tel:{{ site.data.contacts.phone2 }}">{{ site.data.contacts.phone2 }}</a></p>
         {% endif %}
       </div>
       {% endif %}
-      {% if site.data.contacts.hours_weekdays or site.data.contacts.hours_weekends %}
+      {% if site.data.contacts.hours_weekdays != blank or site.data.contacts.hours_weekends != blank %}
       <div class="service-card fade-in" style="text-align:left;">
         <span class="service-icon">⏰</span>
         <h3 style="margin-bottom:0.5rem;">Часы работы</h3>
-        {% if site.data.contacts.hours_weekdays %}<p>{{ site.data.contacts.hours_weekdays }}</p>{% endif %}
-        {% if site.data.contacts.hours_weekends %}<p>{{ site.data.contacts.hours_weekends }}</p>{% endif %}
+        {% if site.data.contacts.hours_weekdays != blank %}<p>{{ site.data.contacts.hours_weekdays }}</p>{% endif %}
+        {% if site.data.contacts.hours_weekends != blank %}<p>{{ site.data.contacts.hours_weekends }}</p>{% endif %}
       </div>
       {% endif %}
-      {% if site.data.contacts.email or site.data.contacts.instagram or site.data.contacts.facebook %}
+      {% if site.data.contacts.email != blank or site.data.contacts.instagram != blank or site.data.contacts.facebook != blank %}
       <div class="service-card fade-in" style="text-align:left;">
         <span class="service-icon">✉️</span>
         <h3 style="margin-bottom:0.5rem;">Email / Соцсети</h3>
-        {% if site.data.contacts.email %}
+        {% if site.data.contacts.email != blank %}
         <p><a href="mailto:{{ site.data.contacts.email }}">{{ site.data.contacts.email }}</a></p>
         {% endif %}
-        {% if site.data.contacts.instagram or site.data.contacts.facebook %}
+        {% if site.data.contacts.instagram != blank or site.data.contacts.facebook != blank %}
         <p style="margin-top:6px;">
-          {% if site.data.contacts.instagram %}<a href="{{ site.data.contacts.instagram }}">Instagram</a>{% endif %}
-          {% if site.data.contacts.instagram and site.data.contacts.facebook %} &nbsp;·&nbsp; {% endif %}
-          {% if site.data.contacts.facebook %}<a href="{{ site.data.contacts.facebook }}">Facebook</a>{% endif %}
+          {% if site.data.contacts.instagram != blank %}<a href="{{ site.data.contacts.instagram }}">Instagram</a>{% endif %}
+          {% if site.data.contacts.instagram != blank and site.data.contacts.facebook != blank %} &nbsp;·&nbsp; {% endif %}
+          {% if site.data.contacts.facebook != blank %}<a href="{{ site.data.contacts.facebook }}">Facebook</a>{% endif %}
         </p>
         {% endif %}
       </div>

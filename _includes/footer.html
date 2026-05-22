@@ -6,7 +6,7 @@
         <div class="nav-logo">
           {{ site.data.header.salon_name | split: ' ' | first }}<span>{{ site.data.header.salon_name | split: ' ' | last }}</span>
         </div>
-        {% if site.data.header.footer_tagline %}
+        {% if site.data.header.footer_tagline != blank %}
         <p>{{ site.data.header.footer_tagline }}</p>
         {% endif %}
       </div>
@@ -24,13 +24,13 @@
       <div class="footer-col">
         <h4>Контакты</h4>
         <ul class="footer-contacts">
-          {% if site.data.contacts.address %}
+          {% if site.data.contacts.address != blank %}
           <li><span class="ico">📍</span>{{ site.data.contacts.address }}</li>
           {% endif %}
-          {% if site.data.contacts.phone %}
+          {% if site.data.contacts.phone != blank %}
           <li><span class="ico">📞</span>{{ site.data.contacts.phone }}</li>
           {% endif %}
-          {% if site.data.contacts.hours_weekdays %}
+          {% if site.data.contacts.hours_weekdays != blank %}
           <li><span class="ico">⏰</span>{{ site.data.contacts.hours_weekdays }}</li>
           {% endif %}
         </ul>

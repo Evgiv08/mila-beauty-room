@@ -7,14 +7,14 @@ description: "Актуальный прайс-лист салона Beauty Studi
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="container">
-    {% if site.data.page_price.eyebrow %}
+    {% if site.data.page_price.eyebrow != blank %}
     <span class="hero-eyebrow">{{ site.data.page_price.eyebrow }}</span>
     {% endif %}
-    {% if site.data.page_price.title %}
+    {% if site.data.page_price.title != blank %}
     <h1 class="section-title">{{ site.data.page_price.title }}</h1>
     {% endif %}
     <span class="gold-line"></span>
-    {% if site.data.page_price.subtitle %}
+    {% if site.data.page_price.subtitle != blank %}
     <p class="section-subtitle">{{ site.data.page_price.subtitle }}</p>
     {% endif %}
   </div>
@@ -28,22 +28,22 @@ description: "Актуальный прайс-лист салона Beauty Studi
       {% for category in site.data.price.categories %}
       <div class="price-category fade-in">
         <div class="price-category-header">
-          {% if category.icon %}<div class="price-category-icon">{{ category.icon }}</div>{% endif %}
-          {% if category.title %}<div><h2>{{ category.title }}</h2></div>{% endif %}
+          {% if category.icon != blank %}<div class="price-category-icon">{{ category.icon }}</div>{% endif %}
+          {% if category.title != blank %}<div><h2>{{ category.title }}</h2></div>{% endif %}
         </div>
         <div class="price-list">
           {% for item in category.items %}
           <div class="price-item">
             <div>
-              {% if item.name %}<div class="price-name">{{ item.name }}</div>{% endif %}
-              {% if item.description %}
+              {% if item.name != blank %}<div class="price-name">{{ item.name }}</div>{% endif %}
+              {% if item.description != blank %}
               <div class="price-desc">{{ item.description }}</div>
               {% endif %}
             </div>
-            {% if item.duration %}
+            {% if item.duration != blank %}
             <span class="price-duration">{{ item.duration }}</span>
             {% endif %}
-            {% if item.price %}
+            {% if item.price != blank %}
             <span class="price-value">{{ item.price }}</span>
             {% endif %}
           </div>
@@ -54,11 +54,11 @@ description: "Актуальный прайс-лист салона Beauty Studi
 
     </div>
 
-    {% if site.data.page_price.footer_note %}
+    {% if site.data.page_price.footer_note != blank %}
     <p class="price-note fade-in">{{ site.data.page_price.footer_note }}</p>
     {% endif %}
 
-    {% if site.data.page_price.cta_button %}
+    {% if site.data.page_price.cta_button != blank %}
     <div style="text-align:center; margin-top: 48px;" class="fade-in">
       <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold">{{ site.data.page_price.cta_button }}</a>
     </div>

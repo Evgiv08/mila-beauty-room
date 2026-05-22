@@ -7,21 +7,21 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 <!-- ===== PAGE HERO ===== -->
 <div class="page-hero">
   <div class="container">
-    {% if site.data.page_gallery.eyebrow %}
+    {% if site.data.page_gallery.eyebrow != blank %}
     <span class="hero-eyebrow">{{ site.data.page_gallery.eyebrow }}</span>
     {% endif %}
-    {% if site.data.page_gallery.title %}
+    {% if site.data.page_gallery.title != blank %}
     <h1 class="section-title">{{ site.data.page_gallery.title }}</h1>
     {% endif %}
     <span class="gold-line"></span>
-    {% if site.data.page_gallery.subtitle %}
+    {% if site.data.page_gallery.subtitle != blank %}
     <p class="section-subtitle">{{ site.data.page_gallery.subtitle }}</p>
     {% endif %}
   </div>
 </div>
 
 <!-- ===== CAROUSEL ===== -->
-{% if site.data.gallery.carousel %}
+{% if site.data.gallery.carousel != blank %}
 <section class="carousel-section">
   <div class="container">
     <div class="carousel-wrap" id="mainCarousel">
@@ -29,12 +29,12 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 
         {% for slide in site.data.gallery.carousel %}
         <div class="carousel-slide">
-          {% if slide.image %}
+          {% if slide.image != blank %}
           <img src="{{ slide.image }}" alt="{{ slide.caption }}" loading="lazy" />
           {% endif %}
           {% if slide.category_label or slide.caption %}
           <div class="carousel-caption">
-            {% if slide.category_label %}<span>{{ slide.category_label }}</span>{% endif %}
+            {% if slide.category_label != blank %}<span>{{ slide.category_label }}</span>{% endif %}
             {{ slide.caption }}
           </div>
           {% endif %}
@@ -55,7 +55,7 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 <!-- ===== GALLERY GRID ===== -->
 <section class="gallery-section">
   <div class="container">
-    {% if site.data.page_gallery.grid_title %}
+    {% if site.data.page_gallery.grid_title != blank %}
     <h2 class="section-title fade-in">{{ site.data.page_gallery.grid_title }}</h2>
     {% endif %}
     <span class="gold-line fade-in"></span>
@@ -71,7 +71,7 @@ description: "Галерея работ мастеров Beauty Studio. Стри
     <div class="gallery-grid" id="galleryGrid">
       {% for photo in site.data.gallery.grid %}
       <div class="gallery-item fade-in" data-category="{{ photo.category }}" data-src="{{ photo.image_full }}">
-        {% if photo.image %}
+        {% if photo.image != blank %}
         <img src="{{ photo.image }}" alt="{{ photo.alt }}" loading="lazy" />
         {% endif %}
         <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
@@ -82,17 +82,17 @@ description: "Галерея работ мастеров Beauty Studio. Стри
 </section>
 
 <!-- CTA -->
-{% if site.data.page_gallery.cta_title %}
+{% if site.data.page_gallery.cta_title != blank %}
 <section style="padding: 60px 0; text-align:center; background: var(--bg-secondary); border-top: 1px solid var(--border-gold);">
   <div class="container">
     <h2 class="fade-in" style="margin-bottom:0.5rem;">{{ site.data.page_gallery.cta_title }}</h2>
     <span class="gold-line fade-in"></span>
-    {% if site.data.page_gallery.cta_subtitle %}
+    {% if site.data.page_gallery.cta_subtitle != blank %}
     <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:460px;">
       {{ site.data.page_gallery.cta_subtitle }}
     </p>
     {% endif %}
-    {% if site.data.page_gallery.cta_button %}
+    {% if site.data.page_gallery.cta_button != blank %}
     <a href="{{ '/#contact' | relative_url }}" class="btn btn-gold fade-in">{{ site.data.page_gallery.cta_button }}</a>
     {% endif %}
   </div>
