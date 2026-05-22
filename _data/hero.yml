@@ -1,16 +1,16 @@
 eyebrow: ""
 title: Ваша красота — наше искусство
-description: Мы создаём образы, которые отражают вашу индивидуальность.
-  Профессиональные мастера, авторские методики и атмосфера настоящей роскоши.
-image: https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80
+description: Я создаю образы, которые отражают вашу индивидуальность.
+  Профессиональный мастер и авторские методики.
+image: ../assets/images/IMG_9397.PNG
 button_primary: Записаться онлайн
 button_secondary: Прайс-лист
 rating_num: ★ 4.9
-rating_label: рейтинг клиентов
+rating_label: ""
 stats:
-  - num: 8+
+  - num: 15+
     label: лет опыта
   - num: 1 200+
     label: довольных клиентов
-  - num: "15"
-    label: мастеров
+  - num: ""
+    label: ""

@@ -146,7 +146,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
   <div class="container">
     <h2 class="section-title fade-in">Контакты</h2>
     <span class="gold-line fade-in"></span>
-    <p class="section-subtitle fade-in">Мы всегда рады вам помочь</p>
+    <p class="section-subtitle fade-in">{{ site.data.contacts.helpText }}</p>
 
     <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:32px; margin-top: 1rem;">
       {% if site.data.contacts.address and site.data.contacts.address != "" %}
@@ -154,6 +154,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
         <span class="service-icon">📍</span>
         <h3 style="margin-bottom:0.5rem;">Адрес</h3>
         <p>{{ site.data.contacts.address }}</p>
+        <a href="https://maps.app.goo.gl/CzVRaMVYpdrxvfaB7?g_st=ipc" target="_blank">Google maps</a>
       </div>
       {% endif %}
       {% if site.data.contacts.phone and site.data.contacts.phone != "" %}
@@ -177,15 +178,15 @@ description: "Beauty Studio — элитный салон красоты. Стр
       {% if site.data.contacts.email and site.data.contacts.email != "" or site.data.contacts.instagram and site.data.contacts.instagram != "" or site.data.contacts.facebook and site.data.contacts.facebook != "" %}
       <div class="service-card fade-in" style="text-align:left;">
         <span class="service-icon">✉️</span>
-        <h3 style="margin-bottom:0.5rem;">Email / Соцсети</h3>
+        <h3 style="margin-bottom:0.5rem;">Соцсети</h3>
         {% if site.data.contacts.email and site.data.contacts.email != "" %}
         <p><a href="mailto:{{ site.data.contacts.email }}">{{ site.data.contacts.email }}</a></p>
         {% endif %}
         {% if site.data.contacts.instagram and site.data.contacts.instagram != "" or site.data.contacts.facebook and site.data.contacts.facebook != "" %}
         <p style="margin-top:6px;">
-          {% if site.data.contacts.instagram and site.data.contacts.instagram != "" %}<a href="{{ site.data.contacts.instagram }}">Instagram</a>{% endif %}
+          {% if site.data.contacts.instagram and site.data.contacts.instagram != "" %}<a href="{{ site.data.contacts.instagram }}" target="_blank">Instagram</a>{% endif %}
           {% if site.data.contacts.instagram and site.data.contacts.instagram != "" and site.data.contacts.facebook and site.data.contacts.facebook != "" %} &nbsp;·&nbsp; {% endif %}
-          {% if site.data.contacts.facebook and site.data.contacts.facebook != "" %}<a href="{{ site.data.contacts.facebook }}">Facebook</a>{% endif %}
+          {% if site.data.contacts.facebook and site.data.contacts.facebook != "" %}<a href="{{ site.data.contacts.facebook }}" target="_blank">Facebook</a>{% endif %}
         </p>
         {% endif %}
       </div>

@@ -118,6 +118,8 @@ section { padding: 60px 0; }
   letter-spacing: 0.08em;
 }
 
+.nav-logo:hover { color: inherit; }
+
 .nav-logo span { color: var(--gold); }
 
 .nav-links {
