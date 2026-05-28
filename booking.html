@@ -1051,9 +1051,14 @@
 
             // ─── INIT ─────────────────────────────────────────────────────
             window.addEventListener("DOMContentLoaded", async () => {
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.firestore();
-                settings = await loadSettings();
+                try {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore();
+                    settings = await loadSettings();
+                } catch (e) {
+                    console.warn("Firebase недоступен, работаем с дефолтными данными:", e.message);
+                    settings = DEFAULT_SETTINGS;
+                }
                 renderServices();
             });
 
@@ -1062,10 +1067,12 @@
                 if (doc.exists) {
                     return doc.data();
                 } else {
-                    await db
-                        .collection("settings")
-                        .doc("config")
-                        .set(DEFAULT_SETTINGS);
+                    // Первый запуск — сохраняем дефолтные настройки
+                    try {
+                        await db.collection("settings").doc("config").set(DEFAULT_SETTINGS);
+                    } catch (e) {
+                        console.warn("Не удалось сохранить настройки (проверьте правила Firestore):", e.message);
+                    }
                     return DEFAULT_SETTINGS;
                 }
             }
