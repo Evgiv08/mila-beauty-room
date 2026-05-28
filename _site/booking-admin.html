@@ -1,0 +1,1477 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Панель мастера — Beauty Studio</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+        <style>
+            :root {
+                --bg-primary: #0d0d0d;
+                --bg-secondary: #141414;
+                --bg-card: #1a1a1a;
+                --gold: #c9a84c;
+                --gold-light: #e8c97a;
+                --gold-dark: #9e7a2e;
+                --text-primary: #f0ece4;
+                --text-muted: #9e9a92;
+                --border: #2a2a2a;
+                --border-gold: rgba(201, 168, 76, 0.35);
+                --radius: 8px;
+                --radius-lg: 16px;
+                --transition: 0.3s ease;
+                --shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+
+                --green: #4caf85;
+                --green-bg: rgba(76, 175, 133, 0.12);
+                --red: #e05c5c;
+                --red-bg: rgba(224, 92, 92, 0.12);
+                --orange: #e08c3c;
+                --orange-bg: rgba(224, 140, 60, 0.12);
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: "Inter", sans-serif;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                min-height: 100vh;
+            }
+
+            /* ─── LOGIN OVERLAY ─── */
+            .login-overlay {
+                position: fixed;
+                inset: 0;
+                background: var(--bg-primary);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            }
+            .login-box {
+                background: var(--bg-card);
+                border: 1px solid var(--border-gold);
+                border-radius: var(--radius-lg);
+                padding: 48px 40px;
+                width: 100%;
+                max-width: 400px;
+                text-align: center;
+            }
+            .login-logo {
+                font-family: "Playfair Display", Georgia, serif;
+                font-size: 1.5rem;
+                color: var(--gold);
+                letter-spacing: 0.08em;
+                margin-bottom: 8px;
+            }
+            .login-subtitle {
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                margin-bottom: 32px;
+            }
+            .login-label {
+                display: block;
+                font-size: 0.78rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                text-align: left;
+                margin-bottom: 8px;
+            }
+            .login-input {
+                width: 100%;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                color: var(--text-primary);
+                font-family: "Inter", sans-serif;
+                font-size: 1rem;
+                padding: 12px 16px;
+                outline: none;
+                transition: border-color var(--transition);
+                text-align: center;
+                letter-spacing: 0.2em;
+            }
+            .login-input:focus {
+                border-color: var(--border-gold);
+            }
+            .login-btn {
+                width: 100%;
+                margin-top: 20px;
+                background: linear-gradient(
+                    135deg,
+                    var(--gold-dark),
+                    var(--gold)
+                );
+                border: none;
+                border-radius: var(--radius);
+                color: #0d0d0d;
+                font-family: "Inter", sans-serif;
+                font-size: 0.95rem;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                padding: 14px;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+            .login-btn:hover {
+                background: linear-gradient(
+                    135deg,
+                    var(--gold),
+                    var(--gold-light)
+                );
+            }
+            .login-error {
+                margin-top: 14px;
+                font-size: 0.85rem;
+                color: var(--red);
+                min-height: 20px;
+            }
+
+            /* ─── LAYOUT ─── */
+            .app {
+                display: none;
+                min-height: 100vh;
+            }
+            .app.visible {
+                display: block;
+            }
+
+            .top-bar {
+                background: rgba(13, 13, 13, 0.95);
+                border-bottom: 1px solid var(--border-gold);
+                padding: 14px 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                backdrop-filter: blur(12px);
+            }
+            .top-bar-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .top-logo {
+                font-family: "Playfair Display", Georgia, serif;
+                font-size: 1.1rem;
+                color: var(--gold);
+            }
+            .top-badge {
+                background: var(--orange-bg);
+                color: var(--orange);
+                border: 1px solid rgba(224, 140, 60, 0.3);
+                border-radius: 20px;
+                padding: 2px 10px;
+                font-size: 0.78rem;
+                font-weight: 600;
+            }
+            .top-logout {
+                background: transparent;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                padding: 6px 14px;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+            .top-logout:hover {
+                border-color: var(--border-gold);
+                color: var(--text-primary);
+            }
+
+            .main-content {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 32px 24px 80px;
+            }
+
+            /* ─── TABS ─── */
+            .tabs {
+                display: flex;
+                gap: 4px;
+                margin-bottom: 28px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 4px;
+            }
+            .tab {
+                flex: 1;
+                padding: 9px 16px;
+                text-align: center;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all var(--transition);
+                color: var(--text-muted);
+                border: none;
+                background: transparent;
+            }
+            .tab:hover {
+                color: var(--text-primary);
+            }
+            .tab.active {
+                background: var(--bg-card);
+                color: var(--gold);
+                border: 1px solid var(--border-gold);
+            }
+            .tab-count {
+                display: inline-block;
+                background: var(--orange-bg);
+                color: var(--orange);
+                border-radius: 20px;
+                padding: 0 7px;
+                font-size: 0.72rem;
+                margin-left: 5px;
+                vertical-align: middle;
+            }
+
+            /* ─── TAB PANELS ─── */
+            .tab-panel {
+                display: none;
+            }
+            .tab-panel.active {
+                display: block;
+            }
+
+            /* ─── BOOKING CARDS ─── */
+            .bookings-list {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .empty-state {
+                text-align: center;
+                padding: 48px 24px;
+                color: var(--text-muted);
+                font-size: 1rem;
+                font-style: italic;
+            }
+            .booking-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: 20px 24px;
+                transition: border-color var(--transition);
+                position: relative;
+            }
+            .booking-card:hover {
+                border-color: var(--border-gold);
+            }
+            .booking-card.status-pending {
+                border-left: 3px solid var(--orange);
+            }
+            .booking-card.status-confirmed {
+                border-left: 3px solid var(--green);
+            }
+            .booking-card.status-rejected {
+                border-left: 3px solid var(--red);
+                opacity: 0.7;
+            }
+
+            .card-header {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 12px;
+                margin-bottom: 14px;
+                flex-wrap: wrap;
+            }
+            .card-name {
+                font-family: "Cormorant Garamond", Georgia, serif;
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+            .card-phone {
+                font-size: 0.88rem;
+                color: var(--text-muted);
+                margin-top: 2px;
+            }
+            .status-badge {
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.78rem;
+                font-weight: 600;
+                flex-shrink: 0;
+            }
+            .status-badge.pending {
+                background: var(--orange-bg);
+                color: var(--orange);
+            }
+            .status-badge.confirmed {
+                background: var(--green-bg);
+                color: var(--green);
+            }
+            .status-badge.rejected {
+                background: var(--red-bg);
+                color: var(--red);
+            }
+
+            .card-details {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px 20px;
+                margin-bottom: 16px;
+            }
+            .card-detail {
+                font-size: 0.85rem;
+                color: var(--text-muted);
+            }
+            .card-detail strong {
+                color: var(--text-primary);
+                font-weight: 500;
+            }
+
+            .card-note {
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                font-style: italic;
+                background: var(--bg-secondary);
+                border-radius: var(--radius);
+                padding: 8px 12px;
+                margin-bottom: 16px;
+            }
+
+            .card-actions {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .action-btn {
+                padding: 8px 20px;
+                border-radius: var(--radius);
+                font-size: 0.85rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all var(--transition);
+                border: 1px solid;
+            }
+            .action-btn.confirm {
+                background: var(--green-bg);
+                border-color: rgba(76, 175, 133, 0.35);
+                color: var(--green);
+            }
+            .action-btn.confirm:hover {
+                background: rgba(76, 175, 133, 0.25);
+            }
+            .action-btn.reject {
+                background: var(--red-bg);
+                border-color: rgba(224, 92, 92, 0.35);
+                color: var(--red);
+            }
+            .action-btn.reject:hover {
+                background: rgba(224, 92, 92, 0.25);
+            }
+            .action-btn.restore {
+                background: var(--orange-bg);
+                border-color: rgba(224, 140, 60, 0.35);
+                color: var(--orange);
+            }
+            .action-btn:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            .card-date-time {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(201, 168, 76, 0.08);
+                border: 1px solid var(--border-gold);
+                border-radius: var(--radius);
+                padding: 4px 12px;
+                font-size: 0.88rem;
+                color: var(--gold);
+                font-weight: 500;
+            }
+
+            /* ─── SETTINGS ─── */
+            .settings-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            .settings-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: 24px;
+            }
+            .settings-card-title {
+                font-family: "Playfair Display", Georgia, serif;
+                font-size: 1.1rem;
+                color: var(--gold);
+                margin-bottom: 16px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            /* Work days checkboxes */
+            .days-grid {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 6px;
+            }
+            .day-toggle {
+                aspect-ratio: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                font-size: 0.78rem;
+                cursor: pointer;
+                transition: all var(--transition);
+                background: var(--bg-secondary);
+                color: var(--text-muted);
+                user-select: none;
+            }
+            .day-toggle.on {
+                background: rgba(201, 168, 76, 0.12);
+                border-color: var(--border-gold);
+                color: var(--gold);
+                font-weight: 600;
+            }
+
+            /* Time inputs */
+            .time-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-top: 14px;
+            }
+            .time-row label {
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                min-width: 80px;
+            }
+            .time-input {
+                flex: 1;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                color: var(--text-primary);
+                font-family: "Inter", sans-serif;
+                font-size: 0.95rem;
+                padding: 8px 12px;
+                outline: none;
+                transition: border-color var(--transition);
+            }
+            .time-input:focus {
+                border-color: var(--border-gold);
+            }
+
+            /* Blocked dates */
+            .blocked-dates-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 12px;
+                min-height: 32px;
+            }
+            .blocked-date-tag {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                background: var(--red-bg);
+                border: 1px solid rgba(224, 92, 92, 0.25);
+                border-radius: 20px;
+                padding: 4px 12px;
+                font-size: 0.82rem;
+                color: var(--red);
+            }
+            .blocked-date-tag button {
+                background: none;
+                border: none;
+                color: var(--red);
+                cursor: pointer;
+                padding: 0;
+                font-size: 0.9rem;
+                opacity: 0.7;
+                transition: opacity var(--transition);
+            }
+            .blocked-date-tag button:hover {
+                opacity: 1;
+            }
+
+            .date-add-row {
+                display: flex;
+                gap: 8px;
+            }
+            .date-picker-input {
+                flex: 1;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                color: var(--text-primary);
+                font-family: "Inter", sans-serif;
+                font-size: 0.9rem;
+                padding: 8px 12px;
+                outline: none;
+                transition: border-color var(--transition);
+            }
+            .date-picker-input:focus {
+                border-color: var(--border-gold);
+            }
+            .date-picker-input::-webkit-calendar-picker-indicator {
+                filter: invert(0.7);
+            }
+
+            /* Password */
+            .pwd-row {
+                display: flex;
+                gap: 8px;
+                margin-top: 14px;
+            }
+
+            /* Save buttons */
+            .save-btn {
+                margin-top: 16px;
+                width: 100%;
+                background: linear-gradient(
+                    135deg,
+                    var(--gold-dark),
+                    var(--gold)
+                );
+                border: none;
+                border-radius: var(--radius);
+                color: #0d0d0d;
+                font-family: "Inter", sans-serif;
+                font-size: 0.88rem;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                padding: 11px;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+            .save-btn:hover {
+                background: linear-gradient(
+                    135deg,
+                    var(--gold),
+                    var(--gold-light)
+                );
+            }
+            .save-btn:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            .small-btn {
+                background: var(--bg-card);
+                border: 1px solid var(--border-gold);
+                border-radius: var(--radius);
+                color: var(--gold);
+                font-family: "Inter", sans-serif;
+                font-size: 0.85rem;
+                padding: 8px 16px;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+            .small-btn:hover {
+                background: rgba(201, 168, 76, 0.1);
+            }
+
+            .save-status {
+                text-align: center;
+                font-size: 0.82rem;
+                margin-top: 8px;
+                min-height: 18px;
+                color: var(--green);
+            }
+
+            /* ─── DURATION EDIT ROW ─── */
+            .dur-edit-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 8px 12px;
+                margin-bottom: 12px;
+                font-size: 0.85rem;
+                color: var(--text-muted);
+            }
+            .dur-edit-label {
+                flex-shrink: 0;
+            }
+            .dur-edit-input {
+                width: 72px;
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                color: var(--text-primary);
+                font-family: "Inter", sans-serif;
+                font-size: 0.88rem;
+                padding: 4px 8px;
+                outline: none;
+                text-align: center;
+                transition: border-color var(--transition);
+            }
+            .dur-edit-input:focus {
+                border-color: var(--border-gold);
+            }
+            .dur-save-btn {
+                background: rgba(201, 168, 76, 0.1);
+                border: 1px solid var(--border-gold);
+                border-radius: 6px;
+                color: var(--gold);
+                font-family: "Inter", sans-serif;
+                font-size: 0.8rem;
+                font-weight: 600;
+                padding: 4px 12px;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+            .dur-save-btn:hover {
+                background: rgba(201, 168, 76, 0.2);
+            }
+            .dur-save-status {
+                font-size: 0.8rem;
+                min-width: 60px;
+            }
+
+            /* ─── SPINNER ─── */
+            .spinner {
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                border: 2px solid var(--border);
+                border-top-color: var(--gold);
+                border-radius: 50%;
+                animation: spin 0.7s linear infinite;
+                vertical-align: middle;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* ─── RESPONSIVE ─── */
+            @media (max-width: 600px) {
+                .main-content {
+                    padding: 20px 16px 60px;
+                }
+                .tabs {
+                    flex-wrap: wrap;
+                }
+                .tab {
+                    flex: 0 0 calc(50% - 4px);
+                }
+                .settings-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ══ LOGIN OVERLAY ══ -->
+        <div class="login-overlay" id="loginOverlay">
+            <div class="login-box">
+                <div class="login-logo">✦ Beauty Studio</div>
+                <div class="login-subtitle">Панель мастера</div>
+
+                <label class="login-label" for="emailInput">Email</label>
+                <input
+                    class="login-input"
+                    type="email"
+                    id="emailInput"
+                    placeholder="your@email.com"
+                    autocomplete="email"
+                    style="letter-spacing: normal; margin-bottom: 14px"
+                />
+                <label class="login-label" for="pwdInput">Пароль</label>
+                <input
+                    class="login-input"
+                    type="password"
+                    id="pwdInput"
+                    placeholder="••••••••"
+                    autocomplete="current-password"
+                />
+                <button class="login-btn" id="loginBtn" onclick="doLogin()">Войти</button>
+                <div class="login-error" id="loginError"></div>
+            </div>
+        </div>
+
+        <!-- ══ MAIN APP ══ -->
+        <div class="app" id="app">
+            <div class="top-bar">
+                <div class="top-bar-left">
+                    <div class="top-logo">✦ Beauty Studio</div>
+                    <div
+                        class="top-badge"
+                        id="pendingBadge"
+                        style="display: none"
+                    >
+                        0 ожидают
+                    </div>
+                </div>
+                <button class="top-logout" onclick="doLogout()">Выйти</button>
+            </div>
+
+            <div class="main-content">
+                <!-- TABS -->
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('pending')">
+                        Ожидают
+                        <span class="tab-count" id="tabPendingCount">0</span>
+                    </button>
+                    <button class="tab" onclick="switchTab('confirmed')">
+                        Подтверждённые
+                    </button>
+                    <button class="tab" onclick="switchTab('all')">
+                        Все записи
+                    </button>
+                    <button class="tab" onclick="switchTab('settings')">
+                        ⚙️ Настройки
+                    </button>
+                </div>
+
+                <!-- TAB: PENDING -->
+                <div class="tab-panel active" id="tab-pending">
+                    <div class="bookings-list" id="list-pending">
+                        <div class="empty-state">
+                            <span class="spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: CONFIRMED -->
+                <div class="tab-panel" id="tab-confirmed">
+                    <div class="bookings-list" id="list-confirmed">
+                        <div class="empty-state">
+                            <span class="spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: ALL -->
+                <div class="tab-panel" id="tab-all">
+                    <div class="bookings-list" id="list-all">
+                        <div class="empty-state">
+                            <span class="spinner"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB: SETTINGS -->
+                <div class="tab-panel" id="tab-settings">
+                    <div class="settings-grid">
+                        <!-- Working schedule -->
+                        <div class="settings-card">
+                            <div class="settings-card-title">
+                                📅 Рабочие дни
+                            </div>
+                            <div class="days-grid" id="daysGrid"></div>
+                            <div class="time-row">
+                                <label>Начало работы</label>
+                                <input
+                                    class="time-input"
+                                    type="time"
+                                    id="startTimeInput"
+                                    value="09:00"
+                                />
+                            </div>
+                            <div class="time-row">
+                                <label>Конец работы</label>
+                                <input
+                                    class="time-input"
+                                    type="time"
+                                    id="endTimeInput"
+                                    value="21:00"
+                                />
+                            </div>
+                            <div class="time-row">
+                                <label>Шаг слотов</label>
+                                <select
+                                    class="time-input"
+                                    id="slotIntervalInput"
+                                >
+                                    <option value="15">15 мин</option>
+                                    <option value="30" selected>30 мин</option>
+                                    <option value="45">45 мин</option>
+                                    <option value="60">60 мин</option>
+                                </select>
+                            </div>
+                            <button class="save-btn" onclick="saveSchedule()">
+                                Сохранить расписание
+                            </button>
+                            <div class="save-status" id="scheduleStatus"></div>
+                        </div>
+
+                        <!-- Blocked dates -->
+                        <div class="settings-card">
+                            <div class="settings-card-title">
+                                🚫 Заблокированные даты
+                            </div>
+                            <div
+                                class="blocked-dates-list"
+                                id="blockedDatesList"
+                            ></div>
+                            <div class="date-add-row">
+                                <input
+                                    class="date-picker-input"
+                                    type="date"
+                                    id="blockDateInput"
+                                />
+                                <button
+                                    class="small-btn"
+                                    onclick="addBlockedDate()"
+                                >
+                                    + Добавить
+                                </button>
+                            </div>
+                            <button
+                                class="save-btn"
+                                onclick="saveBlockedDates()"
+                            >
+                                Сохранить
+                            </button>
+                            <div class="save-status" id="datesStatus"></div>
+                        </div>
+
+                    </div>
+                    <!-- /settings-grid -->
+                </div>
+                <!-- /tab-settings -->
+            </div>
+            <!-- /main-content -->
+        </div>
+        <!-- /app -->
+
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyAbrlTFf7RJWoxgJMPykuMyK5rcJjlpkNs",
+                authDomain: "beauty-room-a7335.firebaseapp.com",
+                projectId: "beauty-room-a7335",
+                storageBucket: "beauty-room-a7335.firebasestorage.app",
+                messagingSenderId: "864218435122",
+                appId: "1:864218435122:web:bfca641cf65578b2cdb62b",
+                measurementId: "G-TSPGWMVH0G",
+            };
+
+            const DEFAULT_SETTINGS = {
+                workDays: [1, 2, 3, 4, 5, 6],
+                startHour: 9,
+                endHour: 21,
+                slotMinutes: 30,
+                blockedDates: [],
+                services: [
+                    {
+                        id: "s01",
+                        cat: "✂️ Стрижки & Укладки",
+                        name: "Женская стрижка",
+                        duration: 60,
+                    },
+                    {
+                        id: "s02",
+                        cat: "✂️ Стрижки & Укладки",
+                        name: "Мужская стрижка",
+                        duration: 45,
+                    },
+                    {
+                        id: "s03",
+                        cat: "✂️ Стрижки & Укладки",
+                        name: "Детская стрижка",
+                        duration: 30,
+                    },
+                    {
+                        id: "s04",
+                        cat: "✂️ Стрижки & Укладки",
+                        name: "Вечерняя укладка",
+                        duration: 75,
+                    },
+                    {
+                        id: "s05",
+                        cat: "✂️ Стрижки & Укладки",
+                        name: "Свадебная причёска",
+                        duration: 120,
+                    },
+                    {
+                        id: "s06",
+                        cat: "✂️ Стрижки & Укладки",
+                        name: "Блоу-драй",
+                        duration: 60,
+                    },
+                    {
+                        id: "s07",
+                        cat: "🎨 Окрашивание",
+                        name: "Однотонное окрашивание",
+                        duration: 120,
+                    },
+                    {
+                        id: "s08",
+                        cat: "🎨 Окрашивание",
+                        name: "Балаяж",
+                        duration: 180,
+                    },
+                    {
+                        id: "s09",
+                        cat: "🎨 Окрашивание",
+                        name: "Омбре",
+                        duration: 150,
+                    },
+                    {
+                        id: "s10",
+                        cat: "🎨 Окрашивание",
+                        name: "Мелирование",
+                        duration: 120,
+                    },
+                    {
+                        id: "s11",
+                        cat: "🎨 Окрашивание",
+                        name: "Тонирование / Глосс",
+                        duration: 60,
+                    },
+                    {
+                        id: "s12",
+                        cat: "💆 Уход за волосами",
+                        name: "Кератиновое выпрямление",
+                        duration: 180,
+                    },
+                    {
+                        id: "s13",
+                        cat: "💆 Уход за волосами",
+                        name: "Ботокс для волос",
+                        duration: 120,
+                    },
+                    {
+                        id: "s14",
+                        cat: "💆 Уход за волосами",
+                        name: "Восстанавливающая маска",
+                        duration: 40,
+                    },
+                    {
+                        id: "s15",
+                        cat: "💆 Уход за волосами",
+                        name: "Масляное обёртывание",
+                        duration: 60,
+                    },
+                    {
+                        id: "s16",
+                        cat: "💅 Ногтевой сервис",
+                        name: "Классический маникюр",
+                        duration: 45,
+                    },
+                    {
+                        id: "s17",
+                        cat: "💅 Ногтевой сервис",
+                        name: "Маникюр + гель-лак",
+                        duration: 60,
+                    },
+                    {
+                        id: "s18",
+                        cat: "💅 Ногтевой сервис",
+                        name: "Наращивание ногтей",
+                        duration: 150,
+                    },
+                    {
+                        id: "s19",
+                        cat: "💅 Ногтевой сервис",
+                        name: "Педикюр классический",
+                        duration: 75,
+                    },
+                    {
+                        id: "s20",
+                        cat: "💅 Ногтевой сервис",
+                        name: "SPA-педикюр",
+                        duration: 90,
+                    },
+                    {
+                        id: "s21",
+                        cat: "💋 Макияж & Брови",
+                        name: "Дневной макияж",
+                        duration: 60,
+                    },
+                    {
+                        id: "s22",
+                        cat: "💋 Макияж & Брови",
+                        name: "Вечерний макияж",
+                        duration: 75,
+                    },
+                    {
+                        id: "s23",
+                        cat: "💋 Макияж & Брови",
+                        name: "Свадебный макияж",
+                        duration: 90,
+                    },
+                    {
+                        id: "s24",
+                        cat: "💋 Макияж & Брови",
+                        name: "Коррекция & окрашивание бровей",
+                        duration: 40,
+                    },
+                    {
+                        id: "s25",
+                        cat: "💋 Макияж & Брови",
+                        name: "Перманентный макияж бровей",
+                        duration: 180,
+                    },
+                ],
+            };
+
+            // ─── STATE ────────────────────────────────────────────────────
+            let db, settings, allBookings = [];
+
+            const MONTHS_GEN = ["января","февраля","марта","апреля","мая","июня",
+                                 "июля","августа","сентября","октября","ноября","декабря"];
+            const DAYS_SHORT = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+            const DAYS_FULL  = ["Воскресенье","Понедельник","Вторник","Среда",
+                                 "Четверг","Пятница","Суббота"];
+
+            // ─── FIREBASE INIT ────────────────────────────────────────────
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+
+            // ─── LOGIN (Firebase Authentication) ─────────────────────────
+            // Для входа нужен аккаунт: Firebase Console → Authentication →
+            // Sign-in method → Email/Password (включить) → Users → Add user
+            document.getElementById("pwdInput").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") doLogin();
+            });
+            document.getElementById("emailInput").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") document.getElementById("pwdInput").focus();
+            });
+
+            async function doLogin() {
+                const email  = document.getElementById("emailInput").value.trim();
+                const pwd    = document.getElementById("pwdInput").value;
+                const errEl  = document.getElementById("loginError");
+                const btn    = document.getElementById("loginBtn");
+                errEl.textContent = "";
+
+                if (!email || !pwd) {
+                    errEl.textContent = "Введите email и пароль";
+                    return;
+                }
+                btn.disabled = true;
+                btn.textContent = "Вход…";
+                try {
+                    await auth.signInWithEmailAndPassword(email, pwd);
+                    db = firebase.firestore();
+                    settings = await loadSettings();
+                    enterApp();
+                } catch (e) {
+                    const codes = ["auth/wrong-password","auth/user-not-found","auth/invalid-credential","auth/invalid-email"];
+                    errEl.textContent = codes.includes(e.code)
+                        ? "Неверный email или пароль"
+                        : e.code === "auth/too-many-requests"
+                            ? "Слишком много попыток. Попробуйте позже"
+                            : "Ошибка: " + e.message;
+                    btn.disabled = false;
+                    btn.textContent = "Войти";
+                }
+            }
+
+            function enterApp() {
+                document.getElementById("loginOverlay").style.display = "none";
+                document.getElementById("app").classList.add("visible");
+                initSettings();
+                loadBookings();
+            }
+
+            function doLogout() {
+                auth.signOut().finally(() => location.reload());
+            }
+
+            async function loadSettings() {
+                const doc = await db.collection("settings").doc("config").get();
+                if (doc.exists) return doc.data();
+                await db.collection("settings").doc("config").set(DEFAULT_SETTINGS);
+                return DEFAULT_SETTINGS;
+            }
+
+            // ─── TABS ─────────────────────────────────────────────────────
+            function switchTab(name) {
+                document.querySelectorAll(".tab").forEach((t, i) => {
+                    const names = ["pending", "confirmed", "all", "settings"];
+                    t.classList.toggle("active", names[i] === name);
+                });
+                document
+                    .querySelectorAll(".tab-panel")
+                    .forEach((p) => p.classList.remove("active"));
+                document.getElementById(`tab-${name}`).classList.add("active");
+                if (name !== "settings") renderBookingLists();
+            }
+
+            // ─── BOOKINGS ─────────────────────────────────────────────────
+            async function loadBookings() {
+                if (!db) {
+                    renderBookingLists();
+                    return;
+                }
+                try {
+                    // Без orderBy — не требует составного индекса Firestore.
+                    // Сортировка выполняется на клиенте в renderList().
+                    const snap = await db.collection("bookings").get();
+                    allBookings = [];
+                    snap.forEach((doc) =>
+                        allBookings.push({ id: doc.id, ...doc.data() }),
+                    );
+                    renderBookingLists();
+                } catch (e) {
+                    console.error("loadBookings error:", e.code, e.message);
+                    // Показываем понятную ошибку в каждом списке
+                    const msg = e.code === "permission-denied"
+                        ? "Нет доступа. Проверьте правила Firestore или войдите заново."
+                        : "Ошибка загрузки: " + e.message;
+                    ["list-pending","list-confirmed","list-all"].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.innerHTML = `<div class="empty-state" style="color:var(--red)">${msg}</div>`;
+                    });
+                }
+            }
+
+            function renderBookingLists() {
+                const pending = allBookings.filter(
+                    (b) => b.status === "pending",
+                );
+                const confirmed = allBookings.filter(
+                    (b) => b.status === "confirmed",
+                );
+
+                // Update pending count badge
+                const badge = document.getElementById("pendingBadge");
+                const tabCount = document.getElementById("tabPendingCount");
+                if (pending.length > 0) {
+                    badge.style.display = "inline";
+                    badge.textContent = `${pending.length} ожидают`;
+                } else {
+                    badge.style.display = "none";
+                }
+                tabCount.textContent = pending.length;
+
+                renderList("list-pending", pending, true);
+                renderList("list-confirmed", confirmed, false);
+                renderList("list-all", allBookings, true);
+            }
+
+            function renderList(containerId, bookings, showActions) {
+                const el = document.getElementById(containerId);
+                if (!bookings.length) {
+                    el.innerHTML = '<div class="empty-state">Записей нет</div>';
+                    return;
+                }
+
+                const sorted = [...bookings].sort((a, b) => {
+                    if (a.date !== b.date) return a.date.localeCompare(b.date);
+                    return a.time.localeCompare(b.time);
+                });
+
+                el.innerHTML = sorted
+                    .map((b) => bookingCard(b, showActions))
+                    .join("");
+            }
+
+            function bookingCard(b, showActions) {
+                const d = parseISODate(b.date);
+                const dateStr = `${d.getDate()} ${MONTHS_GEN[d.getMonth()]} (${DAYS_SHORT[d.getDay()]})`;
+                const dur = formatDur(b.serviceDuration || 60);
+                const statusLabels = {
+                    pending: "Ожидает",
+                    confirmed: "Подтверждена",
+                    rejected: "Отклонена",
+                };
+                const statusLabel = statusLabels[b.status] || b.status;
+
+                const noteHtml = b.note
+                    ? `<div class="card-note">💬 ${escHtml(b.note)}</div>`
+                    : "";
+
+                // service name is optional (new bookings don't have it)
+                const serviceHtml = b.serviceName
+                    ? `<div class="card-detail">✂️ <strong>${escHtml(b.serviceName)}</strong></div>` : "";
+                const priceHtml = b.servicePrice
+                    ? `<div class="card-detail">💰 ${escHtml(b.servicePrice)}</div>` : "";
+
+                const durEditHtml = `
+      <div class="dur-edit-row" id="dur-row-${b.id}">
+        <span class="dur-edit-label">⏱ Длительность:</span>
+        <input class="dur-edit-input" type="number" min="5" max="600" step="5"
+          value="${b.serviceDuration || 60}" id="dur-val-${b.id}"> мин
+        <button class="dur-save-btn" onclick="updateDuration('${b.id}')">Сохранить</button>
+        <span class="dur-save-status" id="dur-status-${b.id}"></span>
+      </div>`;
+
+                let actionsHtml = "";
+                if (showActions) {
+                    if (b.status === "pending") {
+                        actionsHtml = `
+        <div class="card-actions">
+          <button class="action-btn confirm" onclick="updateStatus('${b.id}', 'confirmed')">✓ Подтвердить</button>
+          <button class="action-btn reject"  onclick="updateStatus('${b.id}', 'rejected')">✗ Отклонить</button>
+        </div>`;
+                    } else if (b.status === "confirmed") {
+                        actionsHtml = `
+        <div class="card-actions">
+          <button class="action-btn reject" onclick="updateStatus('${b.id}', 'rejected')">✗ Отменить</button>
+        </div>`;
+                    } else if (b.status === "rejected") {
+                        actionsHtml = `
+        <div class="card-actions">
+          <button class="action-btn restore" onclick="updateStatus('${b.id}', 'pending')">↺ Вернуть в ожидание</button>
+        </div>`;
+                    }
+                }
+
+                return `
+    <div class="booking-card status-${b.status}" id="card-${b.id}">
+      <div class="card-header">
+        <div>
+          <div class="card-name">${escHtml(b.name)}</div>
+          <div class="card-phone">📞 ${escHtml(b.phone)} &nbsp;·&nbsp; ${escHtml(b.messenger || "—")}</div>
+        </div>
+        <div class="card-date-time">📅 ${dateStr} &nbsp; ⏰ ${b.time}</div>
+        <div class="status-badge ${b.status}">${statusLabel}</div>
+      </div>
+      <div class="card-details">
+        ${serviceHtml}
+        <div class="card-detail">⏱ <strong>${dur}</strong></div>
+        ${priceHtml}
+      </div>
+      ${noteHtml}
+      ${durEditHtml}
+      ${actionsHtml}
+    </div>`;
+            }
+
+            async function updateDuration(id) {
+                const input = document.getElementById(`dur-val-${id}`);
+                const statusEl = document.getElementById(`dur-status-${id}`);
+                const newDur = parseInt(input.value) || 60;
+                if (newDur < 5) return;
+
+                input.disabled = true;
+                statusEl.textContent = "…";
+                statusEl.style.color = "var(--text-muted)";
+
+                try {
+                    if (db) {
+                        await db.collection("bookings").doc(id).update({ serviceDuration: newDur });
+                    }
+                    const idx = allBookings.findIndex(b => b.id === id);
+                    if (idx >= 0) allBookings[idx].serviceDuration = newDur;
+                    statusEl.textContent = "✓ Сохранено";
+                    statusEl.style.color = "var(--green)";
+                    setTimeout(() => { statusEl.textContent = ""; }, 2500);
+                } catch (e) {
+                    console.error("updateDuration error:", e);
+                    statusEl.textContent = "Ошибка";
+                    statusEl.style.color = "var(--red)";
+                } finally {
+                    input.disabled = false;
+                }
+            }
+
+            async function updateStatus(id, newStatus) {
+                const card = document.getElementById(`card-${id}`);
+                const btns = card.querySelectorAll(".action-btn");
+                btns.forEach((b) => (b.disabled = true));
+
+                if (db) {
+                    try {
+                        await db
+                            .collection("bookings")
+                            .doc(id)
+                            .update({ status: newStatus });
+                    } catch (e) {
+                        console.error("updateStatus error:", e);
+                        btns.forEach((b) => (b.disabled = false));
+                        return;
+                    }
+                }
+
+                const idx = allBookings.findIndex((b) => b.id === id);
+                if (idx >= 0) allBookings[idx].status = newStatus;
+                renderBookingLists();
+            }
+
+            // ─── SETTINGS PANEL ───────────────────────────────────────────
+            const DAYS_NAMES_SHORT = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+            let localSettings;
+
+            function initSettings() {
+                localSettings = JSON.parse(JSON.stringify(settings));
+
+                // Work days
+                const grid = document.getElementById("daysGrid");
+                grid.innerHTML = DAYS_NAMES_SHORT.map(
+                    (d, i) => `
+    <div class="day-toggle ${localSettings.workDays.includes(i) ? "on" : ""}"
+      data-day="${i}" onclick="toggleDay(${i})">${d}</div>`,
+                ).join("");
+
+                // Times
+                document.getElementById("startTimeInput").value =
+                    `${String(localSettings.startHour).padStart(2, "0")}:00`;
+                document.getElementById("endTimeInput").value =
+                    `${String(localSettings.endHour).padStart(2, "0")}:00`;
+                document.getElementById("slotIntervalInput").value =
+                    localSettings.slotMinutes || 30;
+
+                // Blocked dates
+                renderBlockedDates();
+
+                // Min date for date picker
+                const today = new Date();
+                document.getElementById("blockDateInput").min =
+                    toISODate(today);
+            }
+
+            function toggleDay(i) {
+                const el = document.querySelector(
+                    `.day-toggle[data-day="${i}"]`,
+                );
+                if (localSettings.workDays.includes(i)) {
+                    localSettings.workDays = localSettings.workDays.filter(
+                        (d) => d !== i,
+                    );
+                    el.classList.remove("on");
+                } else {
+                    localSettings.workDays.push(i);
+                    el.classList.add("on");
+                }
+            }
+
+            async function saveSchedule() {
+                const startVal = document.getElementById("startTimeInput").value;
+                const endVal   = document.getElementById("endTimeInput").value;
+                const slot     = parseInt(document.getElementById("slotIntervalInput").value);
+                localSettings.startHour  = parseInt(startVal.split(":")[0]);
+                localSettings.endHour    = parseInt(endVal.split(":")[0]);
+                localSettings.slotMinutes = slot;
+
+                try {
+                    await saveToFirestore({
+                        workDays:   localSettings.workDays,
+                        startHour:  localSettings.startHour,
+                        endHour:    localSettings.endHour,
+                        slotMinutes: slot,
+                    });
+                    showStatus("scheduleStatus", "✓ Расписание сохранено");
+                } catch (e) {
+                    console.error("saveSchedule error:", e);
+                    showStatus("scheduleStatus", "Ошибка: " + e.message, true);
+                }
+            }
+
+            function renderBlockedDates() {
+                const list = document.getElementById("blockedDatesList");
+                if (
+                    !localSettings.blockedDates ||
+                    !localSettings.blockedDates.length
+                ) {
+                    list.innerHTML =
+                        '<span style="font-size:0.82rem;color:var(--text-muted)">Нет заблокированных дат</span>';
+                    return;
+                }
+                list.innerHTML = localSettings.blockedDates
+                    .map((iso) => {
+                        const d = parseISODate(iso);
+                        return `<div class="blocked-date-tag">${d.getDate()} ${MONTHS_GEN[d.getMonth()]}
+      <button onclick="removeBlockedDate('${iso}')">✕</button></div>`;
+                    })
+                    .join("");
+            }
+
+            function addBlockedDate() {
+                const val = document.getElementById("blockDateInput").value;
+                if (!val) return;
+                if (!localSettings.blockedDates)
+                    localSettings.blockedDates = [];
+                if (!localSettings.blockedDates.includes(val)) {
+                    localSettings.blockedDates.push(val);
+                    localSettings.blockedDates.sort();
+                    renderBlockedDates();
+                }
+                document.getElementById("blockDateInput").value = "";
+            }
+
+            function removeBlockedDate(iso) {
+                localSettings.blockedDates = localSettings.blockedDates.filter(
+                    (d) => d !== iso,
+                );
+                renderBlockedDates();
+            }
+
+            async function saveBlockedDates() {
+                try {
+                    await saveToFirestore({ blockedDates: localSettings.blockedDates });
+                    showStatus("datesStatus", "✓ Даты сохранены");
+                } catch (e) {
+                    console.error("saveBlockedDates error:", e);
+                    showStatus("datesStatus", "Ошибка: " + e.message, true);
+                }
+            }
+
+            async function saveToFirestore(data) {
+                if (!db) throw new Error("Нет подключения к базе данных");
+                // set+merge безопаснее update: работает даже если документ не существует
+                await db.collection("settings").doc("config").set(data, { merge: true });
+                Object.assign(settings, data);
+            }
+
+            function showStatus(elId, msg, isError) {
+                const el = document.getElementById(elId);
+                el.textContent = msg;
+                el.style.color = isError ? "var(--red)" : "var(--green)";
+                setTimeout(() => {
+                    el.textContent = "";
+                }, 3000);
+            }
+
+            // ─── HELPERS ──────────────────────────────────────────────────
+            function toISODate(d) {
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+            }
+            function parseISODate(iso) {
+                const [y, m, d] = iso.split("-").map(Number);
+                return new Date(y, m - 1, d);
+            }
+            function formatDur(min) {
+                if (min >= 60) {
+                    const h = Math.floor(min / 60);
+                    const m = min % 60;
+                    return m > 0 ? `${h} ч ${m} мин` : `${h} ч`;
+                }
+                return `${min} мин`;
+            }
+            function escHtml(str) {
+                return String(str || "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;");
+            }
+        </script>
+    </body>
+</html>
