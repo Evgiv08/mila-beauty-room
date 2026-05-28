@@ -9,11 +9,6 @@
             rel="stylesheet"
         />
 
-        <!-- ══════════════════════════════════════════════════
-       FIREBASE — вставьте ваши данные из Firebase Console
-       Инструкция: https://console.firebase.google.com →
-       Ваш проект → Project Settings → Your apps → Web app
-       ══════════════════════════════════════════════════ -->
         <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
@@ -100,33 +95,6 @@
                 max-width: 720px;
                 margin: 0 auto;
                 padding: 40px 24px 80px;
-            }
-
-            /* ─── FIREBASE CONFIG WARNING ─── */
-            .firebase-warning {
-                background: rgba(201, 168, 76, 0.1);
-                border: 1px solid var(--border-gold);
-                border-radius: var(--radius);
-                padding: 16px 20px;
-                margin-bottom: 32px;
-                font-family: "Inter", sans-serif;
-                font-size: 0.85rem;
-                color: var(--gold-light);
-                display: none;
-            }
-            .firebase-warning.visible {
-                display: block;
-            }
-            .firebase-warning strong {
-                display: block;
-                margin-bottom: 6px;
-                font-size: 0.9rem;
-            }
-            .firebase-warning code {
-                background: rgba(0, 0, 0, 0.4);
-                padding: 2px 6px;
-                border-radius: 4px;
-                font-size: 0.8rem;
             }
 
             /* ─── PROGRESS STEPS ─── */
@@ -673,14 +641,6 @@
 
         <!-- BOOKING WRAP -->
         <div class="booking-wrap">
-            <!-- Firebase config warning (shown if not configured) -->
-            <div class="firebase-warning" id="firebaseWarning">
-                <strong>⚙️ Необходима настройка Firebase</strong>
-                Откройте файл <code>booking.html</code> и вставьте ваш Firebase
-                config в переменную <code>firebaseConfig</code> внизу страницы.
-                Инструкция в <code>booking-admin.html</code>.
-            </div>
-
             <!-- PROGRESS INDICATOR -->
             <div class="progress">
                 <div class="prog-step active" data-step="1">
@@ -859,24 +819,18 @@
         <!-- /booking-wrap -->
 
         <script>
-            // ══════════════════════════════════════════════════════════════
-            //  FIREBASE CONFIG — ЗАМЕНИТЕ НА СВОИ ДАННЫЕ
-            //  Где взять: console.firebase.google.com → ваш проект →
-            //  ⚙️ Project Settings → Your apps → Web app → firebaseConfig
-            // ══════════════════════════════════════════════════════════════
             const firebaseConfig = {
-                apiKey: "ВАШ_API_KEY",
-                authDomain: "ВАШ_PROJECT.firebaseapp.com",
-                projectId: "ВАШ_PROJECT_ID",
-                storageBucket: "ВАШ_PROJECT.appspot.com",
-                messagingSenderId: "ВАШ_SENDER_ID",
-                appId: "ВАШ_APP_ID",
+                apiKey: "AIzaSyAbrlTFf7RJWoxgJMPykuMyK5rcJjlpkNs",
+                authDomain: "beauty-room-a7335.firebaseapp.com",
+                projectId: "beauty-room-a7335",
+                storageBucket: "beauty-room-a7335.firebasestorage.app",
+                messagingSenderId: "864218435122",
+                appId: "1:864218435122:web:bfca641cf65578b2cdb62b",
+                measurementId: "G-TSPGWMVH0G",
             };
-            // ══════════════════════════════════════════════════════════════
 
             // ─── DEFAULTS (используются при первом запуске) ───────────────
             const DEFAULT_SETTINGS = {
-                adminPassword: "beauty2024",
                 workDays: [1, 2, 3, 4, 5, 6], // 0=вс,1=пн…6=сб
                 startHour: 9,
                 endHour: 21,
@@ -1097,32 +1051,11 @@
 
             // ─── INIT ─────────────────────────────────────────────────────
             window.addEventListener("DOMContentLoaded", async () => {
-                // Check Firebase config
-                if (firebaseConfig.apiKey === "ВАШ_API_KEY") {
-                    document
-                        .getElementById("firebaseWarning")
-                        .classList.add("visible");
-                    loadOfflineMode();
-                    return;
-                }
-                try {
-                    firebase.initializeApp(firebaseConfig);
-                    db = firebase.firestore();
-                    settings = await loadSettings();
-                    renderServices();
-                } catch (e) {
-                    console.error("Firebase error:", e);
-                    document
-                        .getElementById("firebaseWarning")
-                        .classList.add("visible");
-                    loadOfflineMode();
-                }
-            });
-
-            function loadOfflineMode() {
-                settings = DEFAULT_SETTINGS;
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                settings = await loadSettings();
                 renderServices();
-            }
+            });
 
             async function loadSettings() {
                 const doc = await db.collection("settings").doc("config").get();
@@ -1515,29 +1448,6 @@
                 const [h, m] = t.split(":").map(Number);
                 return h * 60 + m;
             }
-        </script>
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-
-            // Your web app's Firebase configuration
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-                apiKey: "AIzaSyAbrlTFf7RJWoxgJMPykuMyK5rcJjlpkNs",
-                authDomain: "beauty-room-a7335.firebaseapp.com",
-                projectId: "beauty-room-a7335",
-                storageBucket: "beauty-room-a7335.firebasestorage.app",
-                messagingSenderId: "864218435122",
-                appId: "1:864218435122:web:bfca641cf65578b2cdb62b",
-                measurementId: "G-TSPGWMVH0G",
-            };
-
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
         </script>
     </body>
 </html>

@@ -10,6 +10,7 @@
         />
 
         <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
         <style>
@@ -145,55 +146,6 @@
                 font-size: 0.85rem;
                 color: var(--red);
                 min-height: 20px;
-            }
-
-            /* ─── SETUP GUIDE ─── */
-            .setup-guide {
-                display: none;
-                background: rgba(201, 168, 76, 0.06);
-                border: 1px solid var(--border-gold);
-                border-radius: var(--radius-lg);
-                padding: 28px 32px;
-                margin-bottom: 24px;
-                max-width: 700px;
-            }
-            .setup-guide.visible {
-                display: block;
-            }
-            .setup-guide h2 {
-                font-family: "Playfair Display", Georgia, serif;
-                font-size: 1.3rem;
-                color: var(--gold);
-                margin-bottom: 16px;
-            }
-            .setup-guide ol {
-                padding-left: 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            .setup-guide li {
-                font-size: 0.9rem;
-                color: var(--text-primary);
-                line-height: 1.6;
-            }
-            .setup-guide code {
-                background: rgba(0, 0, 0, 0.4);
-                padding: 2px 7px;
-                border-radius: 4px;
-                font-size: 0.82rem;
-                color: var(--gold-light);
-            }
-            .setup-guide a {
-                color: var(--gold);
-            }
-            .setup-guide .note {
-                margin-top: 16px;
-                padding: 12px 16px;
-                background: rgba(0, 0, 0, 0.3);
-                border-radius: var(--radius);
-                font-size: 0.82rem;
-                color: var(--text-muted);
             }
 
             /* ─── LAYOUT ─── */
@@ -753,112 +705,24 @@
                 <div class="login-logo">✦ Beauty Studio</div>
                 <div class="login-subtitle">Панель мастера</div>
 
-                <!-- Setup guide (shown if Firebase not configured) -->
-                <div
-                    id="loginSetupGuide"
-                    style="
-                        display: none;
-                        text-align: left;
-                        margin-bottom: 24px;
-                        background: rgba(201, 168, 76, 0.06);
-                        border: 1px solid var(--border-gold);
-                        border-radius: var(--radius);
-                        padding: 16px;
-                    "
-                >
-                    <div
-                        style="
-                            font-weight: 600;
-                            color: var(--gold);
-                            margin-bottom: 10px;
-                            font-size: 0.9rem;
-                        "
-                    >
-                        ⚙️ Сначала настройте Firebase
-                    </div>
-                    <ol
-                        style="
-                            padding-left: 18px;
-                            font-size: 0.82rem;
-                            color: var(--text-muted);
-                            line-height: 1.8;
-                        "
-                    >
-                        <li>
-                            Перейдите на
-                            <a
-                                href="https://console.firebase.google.com"
-                                target="_blank"
-                                style="color: var(--gold)"
-                                >console.firebase.google.com</a
-                            >
-                        </li>
-                        <li>Создайте проект → добавьте Web-приложение</li>
-                        <li>
-                            Включите
-                            <strong style="color: var(--text-primary)"
-                                >Firestore Database</strong
-                            >
-                        </li>
-                        <li>
-                            Скопируйте
-                            <code
-                                style="
-                                    background: rgba(0, 0, 0, 0.4);
-                                    padding: 1px 5px;
-                                    border-radius: 3px;
-                                    font-size: 0.78rem;
-                                "
-                                >firebaseConfig</code
-                            >
-                            из настроек
-                        </li>
-                        <li>
-                            Вставьте его в оба файла:
-                            <code
-                                style="
-                                    background: rgba(0, 0, 0, 0.4);
-                                    padding: 1px 5px;
-                                    border-radius: 3px;
-                                    font-size: 0.78rem;
-                                "
-                                >booking.html</code
-                            >
-                            и
-                            <code
-                                style="
-                                    background: rgba(0, 0, 0, 0.4);
-                                    padding: 1px 5px;
-                                    border-radius: 3px;
-                                    font-size: 0.78rem;
-                                "
-                                >booking-admin.html</code
-                            >
-                        </li>
-                        <li>
-                            Установите правила Firestore:
-                            <code
-                                style="
-                                    background: rgba(0, 0, 0, 0.4);
-                                    padding: 1px 5px;
-                                    border-radius: 3px;
-                                    font-size: 0.78rem;
-                                "
-                                >allow read, write: if true;</code
-                            >
-                        </li>
-                    </ol>
-                </div>
-
+                <label class="login-label" for="emailInput">Email</label>
+                <input
+                    class="login-input"
+                    type="email"
+                    id="emailInput"
+                    placeholder="your@email.com"
+                    autocomplete="email"
+                    style="letter-spacing: normal; margin-bottom: 14px"
+                />
                 <label class="login-label" for="pwdInput">Пароль</label>
                 <input
                     class="login-input"
                     type="password"
                     id="pwdInput"
                     placeholder="••••••••"
-                    autocomplete="off"
+                    autocomplete="current-password"
                 />
-                <button class="login-btn" onclick="doLogin()">Войти</button>
+                <button class="login-btn" id="loginBtn" onclick="doLogin()">Войти</button>
                 <div class="login-error" id="loginError"></div>
             </div>
         </div>
@@ -880,57 +744,6 @@
             </div>
 
             <div class="main-content">
-                <!-- Setup guide inside app (shown if Firebase not configured) -->
-                <div class="setup-guide" id="appSetupGuide">
-                    <h2>⚙️ Инструкция по подключению Firebase</h2>
-                    <ol>
-                        <li>
-                            Перейдите на
-                            <a
-                                href="https://console.firebase.google.com"
-                                target="_blank"
-                                >console.firebase.google.com</a
-                            >
-                            и войдите через Google-аккаунт
-                        </li>
-                        <li>
-                            Нажмите <strong>«Создать проект»</strong>, дайте ему
-                            название (например: <code>beauty-studio</code>)
-                        </li>
-                        <li>
-                            В левом меню выберите
-                            <strong>Firestore Database</strong> → «Создать базу
-                            данных» → «Начать в тестовом режиме»
-                        </li>
-                        <li>
-                            В настройках проекта (<strong
-                                >⚙️ Project Settings</strong
-                            >) перейдите на вкладку <strong>«Общие»</strong>,
-                            прокрутите вниз до <strong>«Your apps»</strong> →
-                            нажмите иконку <code>&lt;/&gt;</code> (Web) →
-                            зарегистрируйте приложение
-                        </li>
-                        <li>
-                            Скопируйте блок <code>firebaseConfig</code> и
-                            вставьте его в оба файла:
-                            <code>booking.html</code> и
-                            <code>booking-admin.html</code> (в самом низу, перед
-                            <code>&lt;/script&gt;</code>)
-                        </li>
-                        <li>
-                            Сохраните файлы и перезагрузите страницу — система
-                            запустится автоматически
-                        </li>
-                    </ol>
-                    <div class="note">
-                        💡 Пароль по умолчанию: <strong>beauty2024</strong> —
-                        после входа смените его в настройках.<br />
-                        Бесплатный тариф Firebase (Spark) поддерживает до 50 000
-                        операций в день — для салона красоты этого более чем
-                        достаточно.
-                    </div>
-                </div>
-
                 <!-- TABS -->
                 <div class="tabs">
                     <button class="tab active" onclick="switchTab('pending')">
@@ -1069,32 +882,6 @@
                             <div class="save-status" id="servicesStatus"></div>
                         </div>
 
-                        <!-- Password -->
-                        <div class="settings-card">
-                            <div class="settings-card-title">
-                                🔒 Сменить пароль
-                            </div>
-                            <input
-                                class="time-input"
-                                type="password"
-                                id="newPwdInput"
-                                placeholder="Новый пароль"
-                                style="width: 100%"
-                            />
-                            <div class="pwd-row">
-                                <input
-                                    class="time-input"
-                                    type="password"
-                                    id="confirmPwdInput"
-                                    placeholder="Повторите пароль"
-                                    style="flex: 1"
-                                />
-                            </div>
-                            <button class="save-btn" onclick="savePassword()">
-                                Сменить пароль
-                            </button>
-                            <div class="save-status" id="pwdStatus"></div>
-                        </div>
                     </div>
                     <!-- /settings-grid -->
                 </div>
@@ -1105,21 +892,17 @@
         <!-- /app -->
 
         <script>
-            // ══════════════════════════════════════════════════════════════
-            //  FIREBASE CONFIG — ЗАМЕНИТЕ НА СВОИ ДАННЫЕ
-            // ══════════════════════════════════════════════════════════════
             const firebaseConfig = {
-                apiKey: "ВАШ_API_KEY",
-                authDomain: "ВАШ_PROJECT.firebaseapp.com",
-                projectId: "ВАШ_PROJECT_ID",
-                storageBucket: "ВАШ_PROJECT.appspot.com",
-                messagingSenderId: "ВАШ_SENDER_ID",
-                appId: "ВАШ_APP_ID",
+                apiKey: "AIzaSyAbrlTFf7RJWoxgJMPykuMyK5rcJjlpkNs",
+                authDomain: "beauty-room-a7335.firebaseapp.com",
+                projectId: "beauty-room-a7335",
+                storageBucket: "beauty-room-a7335.firebasestorage.app",
+                messagingSenderId: "864218435122",
+                appId: "1:864218435122:web:bfca641cf65578b2cdb62b",
+                measurementId: "G-TSPGWMVH0G",
             };
-            // ══════════════════════════════════════════════════════════════
 
             const DEFAULT_SETTINGS = {
-                adminPassword: "beauty2024",
                 workDays: [1, 2, 3, 4, 5, 6],
                 startHour: 9,
                 endHour: 21,
@@ -1280,100 +1063,73 @@
             };
 
             // ─── STATE ────────────────────────────────────────────────────
-            let db,
-                settings,
-                allBookings = [];
-            const isConfigured = firebaseConfig.apiKey !== "ВАШ_API_KEY";
+            let db, settings, allBookings = [];
 
-            const MONTHS_GEN = [
-                "января",
-                "февраля",
-                "марта",
-                "апреля",
-                "мая",
-                "июня",
-                "июля",
-                "августа",
-                "сентября",
-                "октября",
-                "ноября",
-                "декабря",
-            ];
+            const MONTHS_GEN = ["января","февраля","марта","апреля","мая","июня",
+                                 "июля","августа","сентября","октября","ноября","декабря"];
             const DAYS_SHORT = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-            const DAYS_FULL = [
-                "Воскресенье",
-                "Понедельник",
-                "Вторник",
-                "Среда",
-                "Четверг",
-                "Пятница",
-                "Суббота",
-            ];
+            const DAYS_FULL  = ["Воскресенье","Понедельник","Вторник","Среда",
+                                 "Четверг","Пятница","Суббота"];
 
-            // ─── LOGIN ────────────────────────────────────────────────────
-            document
-                .getElementById("pwdInput")
-                .addEventListener("keydown", (e) => {
-                    if (e.key === "Enter") doLogin();
-                });
+            // ─── FIREBASE INIT ────────────────────────────────────────────
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+
+            // ─── LOGIN (Firebase Authentication) ─────────────────────────
+            // Для входа нужен аккаунт: Firebase Console → Authentication →
+            // Sign-in method → Email/Password (включить) → Users → Add user
+            document.getElementById("pwdInput").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") doLogin();
+            });
+            document.getElementById("emailInput").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") document.getElementById("pwdInput").focus();
+            });
 
             async function doLogin() {
-                const pwd = document.getElementById("pwdInput").value;
-                const errEl = document.getElementById("loginError");
+                const email  = document.getElementById("emailInput").value.trim();
+                const pwd    = document.getElementById("pwdInput").value;
+                const errEl  = document.getElementById("loginError");
+                const btn    = document.getElementById("loginBtn");
                 errEl.textContent = "";
 
-                if (!isConfigured) {
-                    document.getElementById("loginSetupGuide").style.display =
-                        "block";
-                    // Allow offline mode with default password
-                    if (pwd === DEFAULT_SETTINGS.adminPassword) {
-                        enterApp(DEFAULT_SETTINGS);
-                        return;
-                    }
-                    errEl.textContent =
-                        "Неверный пароль. Используйте: beauty2024";
+                if (!email || !pwd) {
+                    errEl.textContent = "Введите email и пароль";
                     return;
                 }
-
+                btn.disabled = true;
+                btn.textContent = "Вход…";
                 try {
-                    firebase.initializeApp(firebaseConfig);
+                    await auth.signInWithEmailAndPassword(email, pwd);
                     db = firebase.firestore();
                     settings = await loadSettings();
-                    if (pwd === settings.adminPassword) {
-                        enterApp(settings);
-                    } else {
-                        errEl.textContent = "Неверный пароль";
-                    }
+                    enterApp();
                 } catch (e) {
-                    console.error(e);
-                    errEl.textContent = "Ошибка подключения к базе данных";
+                    const codes = ["auth/wrong-password","auth/user-not-found","auth/invalid-credential","auth/invalid-email"];
+                    errEl.textContent = codes.includes(e.code)
+                        ? "Неверный email или пароль"
+                        : e.code === "auth/too-many-requests"
+                            ? "Слишком много попыток. Попробуйте позже"
+                            : "Ошибка: " + e.message;
+                    btn.disabled = false;
+                    btn.textContent = "Войти";
                 }
             }
 
-            function enterApp(cfg) {
-                settings = cfg;
+            function enterApp() {
                 document.getElementById("loginOverlay").style.display = "none";
                 document.getElementById("app").classList.add("visible");
-                if (!isConfigured) {
-                    document
-                        .getElementById("appSetupGuide")
-                        .classList.add("visible");
-                }
                 initSettings();
                 loadBookings();
             }
 
             function doLogout() {
-                location.reload();
+                auth.signOut().finally(() => location.reload());
             }
 
             async function loadSettings() {
                 const doc = await db.collection("settings").doc("config").get();
                 if (doc.exists) return doc.data();
-                await db
-                    .collection("settings")
-                    .doc("config")
-                    .set(DEFAULT_SETTINGS);
+                await db.collection("settings").doc("config").set(DEFAULT_SETTINGS);
                 return DEFAULT_SETTINGS;
             }
 
@@ -1676,29 +1432,6 @@
                 showStatus("servicesStatus", "✓ Длительность сохранена");
             }
 
-            async function savePassword() {
-                const p1 = document.getElementById("newPwdInput").value;
-                const p2 = document.getElementById("confirmPwdInput").value;
-                if (!p1) {
-                    showStatus("pwdStatus", "⚠ Введите пароль", true);
-                    return;
-                }
-                if (p1 !== p2) {
-                    showStatus("pwdStatus", "⚠ Пароли не совпадают", true);
-                    return;
-                }
-                if (p1.length < 4) {
-                    showStatus("pwdStatus", "⚠ Минимум 4 символа", true);
-                    return;
-                }
-                await saveToFirestore({ adminPassword: p1 });
-                localSettings.adminPassword = p1;
-                settings.adminPassword = p1;
-                document.getElementById("newPwdInput").value = "";
-                document.getElementById("confirmPwdInput").value = "";
-                showStatus("pwdStatus", "✓ Пароль изменён");
-            }
-
             async function saveToFirestore(data) {
                 if (!db) {
                     return;
@@ -1743,29 +1476,6 @@
                     .replace(/>/g, "&gt;")
                     .replace(/"/g, "&quot;");
             }
-        </script>
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-
-            // Your web app's Firebase configuration
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-                apiKey: "AIzaSyAbrlTFf7RJWoxgJMPykuMyK5rcJjlpkNs",
-                authDomain: "beauty-room-a7335.firebaseapp.com",
-                projectId: "beauty-room-a7335",
-                storageBucket: "beauty-room-a7335.firebasestorage.app",
-                messagingSenderId: "864218435122",
-                appId: "1:864218435122:web:bfca641cf65578b2cdb62b",
-                measurementId: "G-TSPGWMVH0G",
-            };
-
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
         </script>
     </body>
 </html>
