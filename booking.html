@@ -645,160 +645,82 @@
             <div class="progress">
                 <div class="prog-step active" data-step="1">
                     <div class="prog-num">1</div>
-                    <div class="prog-label">Услуга</div>
+                    <div class="prog-label">Дата</div>
                 </div>
                 <div class="prog-line" id="line1"></div>
                 <div class="prog-step" data-step="2">
                     <div class="prog-num">2</div>
-                    <div class="prog-label">Дата</div>
+                    <div class="prog-label">Время</div>
                 </div>
                 <div class="prog-line" id="line2"></div>
                 <div class="prog-step" data-step="3">
                     <div class="prog-num">3</div>
-                    <div class="prog-label">Время</div>
-                </div>
-                <div class="prog-line" id="line3"></div>
-                <div class="prog-step" data-step="4">
-                    <div class="prog-num">4</div>
                     <div class="prog-label">Контакты</div>
                 </div>
             </div>
 
-            <!-- ══ STEP 1 — CHOOSE SERVICE ══ -->
+            <!-- ══ STEP 1 — CHOOSE DATE ══ -->
             <div class="panel active" id="panel-1">
-                <div class="panel-title">Выберите услугу</div>
-                <div class="gold-line"></div>
-                <div id="servicesContainer">
-                    <div class="slots-loading">
-                        <span class="spinner"></span> Загрузка услуг…
-                    </div>
-                </div>
-                <div class="btn-row">
-                    <button class="btn-next" id="btnToDate" disabled>
-                        Далее →
-                    </button>
-                </div>
-            </div>
-
-            <!-- ══ STEP 2 — CHOOSE DATE ══ -->
-            <div class="panel" id="panel-2">
                 <div class="panel-title">Выберите дату</div>
-                <div class="panel-subtitle">
-                    Запись доступна на 2 недели вперёд
-                </div>
+                <div class="panel-subtitle">Запись доступна на 2 недели вперёд</div>
                 <div class="gold-line"></div>
                 <div id="calendarContainer"></div>
                 <div class="btn-row">
-                    <button class="btn-back" onclick="goToStep(1)">
-                        ← Назад
-                    </button>
-                    <button class="btn-next" id="btnToTime" disabled>
-                        Далее →
-                    </button>
+                    <button class="btn-next" id="btnToTime" disabled>Далее →</button>
                 </div>
             </div>
 
-            <!-- ══ STEP 3 — CHOOSE TIME ══ -->
-            <div class="panel" id="panel-3">
+            <!-- ══ STEP 2 — CHOOSE TIME ══ -->
+            <div class="panel" id="panel-2">
                 <div class="panel-title">Выберите время</div>
                 <div class="gold-line"></div>
-                <div class="selected-summary" id="step3summary"></div>
+                <div class="selected-summary" id="step2summary"></div>
                 <div id="timeSlotsContainer">
-                    <div class="slots-loading">
-                        <span class="spinner"></span> Загрузка…
-                    </div>
+                    <div class="slots-loading"><span class="spinner"></span> Загрузка…</div>
                 </div>
                 <div class="btn-row">
-                    <button class="btn-back" onclick="goToStep(2)">
-                        ← Назад
-                    </button>
-                    <button class="btn-next" id="btnToContacts" disabled>
-                        Далее →
-                    </button>
+                    <button class="btn-back" onclick="goToStep(1)">← Назад</button>
+                    <button class="btn-next" id="btnToContacts" disabled>Далее →</button>
                 </div>
             </div>
 
-            <!-- ══ STEP 4 — CONTACTS ══ -->
-            <div class="panel" id="panel-4">
+            <!-- ══ STEP 3 — CONTACTS ══ -->
+            <div class="panel" id="panel-3">
                 <div class="panel-title">Ваши контакты</div>
-                <div class="panel-subtitle">
-                    Мастер свяжется для подтверждения записи
-                </div>
+                <div class="panel-subtitle">Мастер свяжется для подтверждения записи</div>
                 <div class="gold-line"></div>
-                <div class="selected-summary" id="step4summary"></div>
+                <div class="selected-summary" id="step3summary"></div>
 
                 <form id="bookingForm" novalidate>
                     <div class="form-group">
                         <label class="form-label">Ваше имя</label>
-                        <input
-                            class="form-input"
-                            type="text"
-                            id="inputName"
-                            placeholder="Имя и фамилия"
-                            required
-                        />
+                        <input class="form-input" type="text" id="inputName" placeholder="Имя и фамилия" required />
                     </div>
                     <div class="form-group">
                         <label class="form-label">Номер телефона</label>
-                        <input
-                            class="form-input"
-                            type="tel"
-                            id="inputPhone"
-                            placeholder="+38 (0__) ___-__-__"
-                            required
-                        />
+                        <input class="form-input" type="tel" id="inputPhone" placeholder="+38 (0__) ___-__-__" required />
                     </div>
                     <div class="form-group">
                         <label class="form-label">Удобный мессенджер</label>
                         <div class="messenger-options">
                             <label class="messenger-option" id="mesViber">
-                                <input
-                                    type="radio"
-                                    name="messenger"
-                                    value="Viber"
-                                />
-                                📲 Viber
+                                <input type="radio" name="messenger" value="Viber" /> 📲 Viber
                             </label>
                             <label class="messenger-option" id="mesTelegram">
-                                <input
-                                    type="radio"
-                                    name="messenger"
-                                    value="Telegram"
-                                />
-                                ✈️ Telegram
+                                <input type="radio" name="messenger" value="Telegram" /> ✈️ Telegram
                             </label>
                             <label class="messenger-option" id="mesWhatsApp">
-                                <input
-                                    type="radio"
-                                    name="messenger"
-                                    value="WhatsApp"
-                                />
-                                💬 WhatsApp
+                                <input type="radio" name="messenger" value="WhatsApp" /> 💬 WhatsApp
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label"
-                            >Пожелания (необязательно)</label
-                        >
-                        <textarea
-                            class="form-input"
-                            id="inputNote"
-                            placeholder="Любые пожелания к мастеру…"
-                        ></textarea>
+                        <label class="form-label">Что нужно сделать + пожелания</label>
+                        <textarea class="form-input" id="inputNote" placeholder="Опишите желаемую процедуру, длину и густоту волос, особые пожелания…" style="min-height:110px"></textarea>
                     </div>
-
                     <div class="btn-row">
-                        <button
-                            type="button"
-                            class="btn-back"
-                            onclick="goToStep(3)"
-                        >
-                            ← Назад
-                        </button>
-                        <button type="submit" class="btn-next" id="btnSubmit">
-                            Записаться
-                        </button>
+                        <button type="button" class="btn-back" onclick="goToStep(2)">← Назад</button>
+                        <button type="submit" class="btn-next" id="btnSubmit">Записаться</button>
                     </div>
                 </form>
             </div>
@@ -1017,7 +939,7 @@
 
             // ─── STATE ────────────────────────────────────────────────────
             let db, settings;
-            let selected = { service: null, date: null, time: null };
+            let selected = { date: null, time: null };
             let currentStep = 1;
             const MONTHS_RU = [
                 "Январь",
@@ -1059,7 +981,8 @@
                     console.warn("Firebase недоступен, работаем с дефолтными данными:", e.message);
                     settings = DEFAULT_SETTINGS;
                 }
-                renderServices();
+                renderCalendar();
+                initBtnListeners();
             });
 
             async function loadSettings() {
@@ -1079,14 +1002,12 @@
 
             // ─── STEP NAVIGATION ──────────────────────────────────────────
             function goToStep(n) {
-                document
-                    .getElementById(`panel-${currentStep}`)
-                    .classList.remove("active");
+                document.getElementById(`panel-${currentStep}`).classList.remove("active");
                 currentStep = n;
                 document.getElementById(`panel-${n}`).classList.add("active");
                 updateProgress(n);
-                if (n === 3) loadTimeSlots();
-                if (n === 4) renderStep4Summary();
+                if (n === 2) loadTimeSlots();
+                if (n === 3) renderStep3Summary();
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
 
@@ -1097,77 +1018,18 @@
                     if (step === active) el.classList.add("active");
                     if (step < active) el.classList.add("done");
                 });
-                ["line1", "line2", "line3"].forEach((id, i) => {
+                ["line1", "line2"].forEach((id, i) => {
                     const el = document.getElementById(id);
-                    el.classList.toggle("done", active > i + 1);
+                    if (el) el.classList.toggle("done", active > i + 1);
                 });
             }
 
-            // ─── STEP 1: SERVICES ─────────────────────────────────────────
-            function renderServices() {
-                const container = document.getElementById("servicesContainer");
-                if (!settings.services || !settings.services.length) {
-                    container.innerHTML =
-                        '<p style="color:var(--text-muted)">Услуги не найдены</p>';
-                    return;
-                }
-
-                const grouped = {};
-                settings.services.forEach((s) => {
-                    if (!grouped[s.cat]) grouped[s.cat] = [];
-                    grouped[s.cat].push(s);
-                });
-
-                let html = "";
-                Object.entries(grouped).forEach(([cat, items]) => {
-                    html += `<div class="service-category">
-      <div class="category-label">${cat}</div>
-      <div class="service-grid">`;
-                    items.forEach((s) => {
-                        const dur =
-                            s.duration >= 60
-                                ? `${Math.floor(s.duration / 60)} ч ${s.duration % 60 > 0 ? (s.duration % 60) + " мин" : ""}`.trim()
-                                : `${s.duration} мин`;
-                        html += `<div class="service-card" data-id="${s.id}" onclick="selectService('${s.id}')">
-        <div class="s-name">${s.name}</div>
-        <div class="s-dur">⏱ ${dur}</div>
-        ${s.price ? `<div class="s-price">${s.price}</div>` : ""}
-      </div>`;
-                    });
-                    html += `</div></div>`;
-                });
-
-                container.innerHTML = html;
-
-                document
-                    .getElementById("btnToDate")
-                    .addEventListener("click", () => goToStep(2));
+            function initBtnListeners() {
+                document.getElementById("btnToTime").addEventListener("click", () => goToStep(2));
+                document.getElementById("btnToContacts").addEventListener("click", () => goToStep(3));
             }
 
-            function selectService(id) {
-                selected.service = settings.services.find((s) => s.id === id);
-                document.querySelectorAll(".service-card").forEach((el) => {
-                    el.classList.toggle("selected", el.dataset.id === id);
-                });
-                document.getElementById("btnToDate").disabled = false;
-                selected.date = null;
-                selected.time = null;
-                document.getElementById("btnToTime").disabled = true;
-                document.getElementById("btnToContacts").disabled = true;
-            }
-
-            // ─── STEP 2: CALENDAR ─────────────────────────────────────────
-            function goToStepDate() {
-                if (!selected.service) return;
-                goToStep(2);
-                renderCalendar();
-            }
-
-            document
-                .getElementById("btnToDate")
-                .addEventListener("click", () => {
-                    renderCalendar();
-                });
+            // ─── STEP 1: CALENDAR ─────────────────────────────────────────
 
             function renderCalendar() {
                 const container = document.getElementById("calendarContainer");
@@ -1240,52 +1102,45 @@
                 document.getElementById("btnToContacts").disabled = true;
             }
 
-            document
-                .getElementById("btnToTime")
-                .addEventListener("click", () => goToStep(3));
-
-            // ─── STEP 3: TIME SLOTS ───────────────────────────────────────
+            // ─── STEP 2: TIME SLOTS ───────────────────────────────────────
             async function loadTimeSlots() {
                 const container = document.getElementById("timeSlotsContainer");
                 container.innerHTML =
                     '<div class="slots-loading"><span class="spinner"></span> Проверяем доступное время…</div>';
 
-                // Summary
                 const d = parseISODate(selected.date);
                 const dateStr = `${d.getDate()} ${MONTHS_GEN[d.getMonth()]} (${DAYS_RU[d.getDay()]})`;
-                const dur = selected.service.duration;
-                const durStr =
-                    dur >= 60
-                        ? `${Math.floor(dur / 60)} ч ${dur % 60 > 0 ? (dur % 60) + " мин" : ""}`.trim()
-                        : `${dur} мин`;
-                document.getElementById("step3summary").innerHTML =
-                    `<div>Услуга: <span>${selected.service.name}</span></div>
-     <div>Дата: <span>${dateStr}</span></div>
-     <div>Длительность: <span>${durStr}</span></div>`;
+                document.getElementById("step2summary").innerHTML =
+                    `<div>Дата: <span>${dateStr}</span></div>`;
 
-                // Get confirmed bookings for the day
+                // Get confirmed bookings for the day.
+                // Фильтруем только по дате (один where = не нужен составной индекс),
+                // статус "confirmed" проверяем на клиенте.
                 let confirmedBookings = [];
                 if (db) {
                     try {
                         const snap = await db
                             .collection("bookings")
                             .where("date", "==", selected.date)
-                            .where("status", "==", "confirmed")
                             .get();
-                        snap.forEach((doc) =>
-                            confirmedBookings.push(doc.data()),
-                        );
+                        snap.forEach((doc) => {
+                            const data = doc.data();
+                            if (data.status === "confirmed") {
+                                confirmedBookings.push(data);
+                            }
+                        });
                     } catch (e) {
                         console.error("Error loading bookings:", e);
                     }
                 }
 
-                // Generate slots
+                // Generate slots — показываем все слоты,
+                // занятые блокируются по длительности подтверждённых записей
+                const interval = settings.slotMinutes || 30;
                 const slots = [];
                 let t = settings.startHour * 60;
                 const end = settings.endHour * 60;
-                const interval = settings.slotMinutes || 30;
-                while (t + selected.service.duration <= end) {
+                while (t < end) {
                     slots.push(t);
                     t += interval;
                 }
@@ -1299,13 +1154,9 @@
                 let html = '<div class="time-grid">';
                 slots.forEach((min) => {
                     const timeStr = minutesToTime(min);
-                    const available = isSlotFree(
-                        min,
-                        selected.service.duration,
-                        confirmedBookings,
-                    );
-                    const selClass =
-                        selected.time === timeStr ? "selected" : "";
+                    // Слот занят если он попадает внутрь подтверждённой записи
+                    const available = isSlotFree(min, interval, confirmedBookings);
+                    const selClass   = selected.time === timeStr ? "selected" : "";
                     const takenClass = available ? "" : "taken";
                     html += `<div class="time-slot ${selClass} ${takenClass}"
       data-time="${timeStr}"
@@ -1333,17 +1184,12 @@
                 document.getElementById("btnToContacts").disabled = false;
             }
 
-            document
-                .getElementById("btnToContacts")
-                .addEventListener("click", () => goToStep(4));
-
-            // ─── STEP 4: CONTACTS ─────────────────────────────────────────
-            function renderStep4Summary() {
+            // ─── STEP 3: CONTACTS ─────────────────────────────────────────
+            function renderStep3Summary() {
                 const d = parseISODate(selected.date);
                 const dateStr = `${d.getDate()} ${MONTHS_GEN[d.getMonth()]}`;
-                document.getElementById("step4summary").innerHTML =
-                    `<div>Услуга: <span>${selected.service.name}</span></div>
-     <div>Дата: <span>${dateStr}</span></div>
+                document.getElementById("step3summary").innerHTML =
+                    `<div>Дата: <span>${dateStr}</span></div>
      <div>Время: <span>${selected.time}</span></div>`;
             }
 
@@ -1390,10 +1236,7 @@
                         phone,
                         messenger,
                         note,
-                        serviceId: selected.service.id,
-                        serviceName: selected.service.name,
-                        serviceDuration: selected.service.duration,
-                        servicePrice: selected.service.price || "",
+                        serviceDuration: 60,
                         date: selected.date,
                         time: selected.time,
                         status: "pending",
@@ -1418,22 +1261,16 @@
                 });
 
             function showConfirmation(b) {
-                document.getElementById("panel-4").classList.remove("active");
+                document.getElementById("panel-3").classList.remove("active");
                 document.getElementById("panel-done").classList.add("active");
-                updateProgress(5);
+                updateProgress(4);
 
                 const d = parseISODate(b.date);
                 const dateStr = `${d.getDate()} ${MONTHS_GEN[d.getMonth()]}`;
-                const dur =
-                    b.serviceDuration >= 60
-                        ? `${Math.floor(b.serviceDuration / 60)} ч ${b.serviceDuration % 60 > 0 ? (b.serviceDuration % 60) + " мин" : ""}`.trim()
-                        : `${b.serviceDuration} мин`;
 
                 document.getElementById("confirmDetails").innerHTML = `
-    <div class="confirm-detail-row"><span class="key">Услуга</span><span class="val">${b.serviceName}</span></div>
     <div class="confirm-detail-row"><span class="key">Дата</span><span class="val">${dateStr}</span></div>
     <div class="confirm-detail-row"><span class="key">Время</span><span class="val">${b.time}</span></div>
-    <div class="confirm-detail-row"><span class="key">Длительность</span><span class="val">${dur}</span></div>
     <div class="confirm-detail-row"><span class="key">Мессенджер</span><span class="val">${b.messenger}</span></div>
     <div class="confirm-detail-row"><span class="key">Телефон</span><span class="val">${b.phone}</span></div>
   `;

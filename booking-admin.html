@@ -487,64 +487,6 @@
                 border-color: var(--border-gold);
             }
 
-            /* Services list */
-            .services-admin-list {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                max-height: 400px;
-                overflow-y: auto;
-                padding-right: 4px;
-            }
-            .services-admin-list::-webkit-scrollbar {
-                width: 4px;
-            }
-            .services-admin-list::-webkit-scrollbar-track {
-                background: var(--bg-secondary);
-            }
-            .services-admin-list::-webkit-scrollbar-thumb {
-                background: var(--border);
-                border-radius: 2px;
-            }
-
-            .service-row {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                background: var(--bg-secondary);
-                border: 1px solid var(--border);
-                border-radius: var(--radius);
-                padding: 10px 12px;
-            }
-            .service-row-name {
-                flex: 1;
-                font-size: 0.88rem;
-                color: var(--text-primary);
-            }
-            .service-row-dur {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 0.82rem;
-                color: var(--text-muted);
-            }
-            .dur-input {
-                width: 68px;
-                background: var(--bg-card);
-                border: 1px solid var(--border);
-                border-radius: 6px;
-                color: var(--text-primary);
-                font-family: "Inter", sans-serif;
-                font-size: 0.88rem;
-                padding: 4px 8px;
-                outline: none;
-                text-align: center;
-                transition: border-color var(--transition);
-            }
-            .dur-input:focus {
-                border-color: var(--border-gold);
-            }
-
             /* Blocked dates */
             .blocked-dates-list {
                 display: flex;
@@ -662,6 +604,59 @@
                 margin-top: 8px;
                 min-height: 18px;
                 color: var(--green);
+            }
+
+            /* ─── DURATION EDIT ROW ─── */
+            .dur-edit-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 8px 12px;
+                margin-bottom: 12px;
+                font-size: 0.85rem;
+                color: var(--text-muted);
+            }
+            .dur-edit-label {
+                flex-shrink: 0;
+            }
+            .dur-edit-input {
+                width: 72px;
+                background: var(--bg-card);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                color: var(--text-primary);
+                font-family: "Inter", sans-serif;
+                font-size: 0.88rem;
+                padding: 4px 8px;
+                outline: none;
+                text-align: center;
+                transition: border-color var(--transition);
+            }
+            .dur-edit-input:focus {
+                border-color: var(--border-gold);
+            }
+            .dur-save-btn {
+                background: rgba(201, 168, 76, 0.1);
+                border: 1px solid var(--border-gold);
+                border-radius: 6px;
+                color: var(--gold);
+                font-family: "Inter", sans-serif;
+                font-size: 0.8rem;
+                font-weight: 600;
+                padding: 4px 12px;
+                cursor: pointer;
+                transition: all var(--transition);
+            }
+            .dur-save-btn:hover {
+                background: rgba(201, 168, 76, 0.2);
+            }
+            .dur-save-status {
+                font-size: 0.8rem;
+                min-width: 60px;
             }
 
             /* ─── SPINNER ─── */
@@ -862,24 +857,6 @@
                                 Сохранить
                             </button>
                             <div class="save-status" id="datesStatus"></div>
-                        </div>
-
-                        <!-- Service durations -->
-                        <div class="settings-card" style="grid-column: 1 / -1">
-                            <div class="settings-card-title">
-                                ⏱ Длительность услуг (в минутах)
-                            </div>
-                            <div
-                                class="services-admin-list"
-                                id="servicesAdminList"
-                            ></div>
-                            <button
-                                class="save-btn"
-                                onclick="saveServiceDurations()"
-                            >
-                                Сохранить длительность
-                            </button>
-                            <div class="save-status" id="servicesStatus"></div>
                         </div>
 
                     </div>
@@ -1153,19 +1130,24 @@
                     return;
                 }
                 try {
-                    const snap = await db
-                        .collection("bookings")
-                        .orderBy("date")
-                        .orderBy("time")
-                        .get();
+                    // Без orderBy — не требует составного индекса Firestore.
+                    // Сортировка выполняется на клиенте в renderList().
+                    const snap = await db.collection("bookings").get();
                     allBookings = [];
                     snap.forEach((doc) =>
                         allBookings.push({ id: doc.id, ...doc.data() }),
                     );
                     renderBookingLists();
                 } catch (e) {
-                    console.error("loadBookings error:", e);
-                    renderBookingLists();
+                    console.error("loadBookings error:", e.code, e.message);
+                    // Показываем понятную ошибку в каждом списке
+                    const msg = e.code === "permission-denied"
+                        ? "Нет доступа. Проверьте правила Firestore или войдите заново."
+                        : "Ошибка загрузки: " + e.message;
+                    ["list-pending","list-confirmed","list-all"].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.innerHTML = `<div class="empty-state" style="color:var(--red)">${msg}</div>`;
+                    });
                 }
             }
 
@@ -1225,6 +1207,21 @@
                     ? `<div class="card-note">💬 ${escHtml(b.note)}</div>`
                     : "";
 
+                // service name is optional (new bookings don't have it)
+                const serviceHtml = b.serviceName
+                    ? `<div class="card-detail">✂️ <strong>${escHtml(b.serviceName)}</strong></div>` : "";
+                const priceHtml = b.servicePrice
+                    ? `<div class="card-detail">💰 ${escHtml(b.servicePrice)}</div>` : "";
+
+                const durEditHtml = `
+      <div class="dur-edit-row" id="dur-row-${b.id}">
+        <span class="dur-edit-label">⏱ Длительность:</span>
+        <input class="dur-edit-input" type="number" min="5" max="600" step="5"
+          value="${b.serviceDuration || 60}" id="dur-val-${b.id}"> мин
+        <button class="dur-save-btn" onclick="updateDuration('${b.id}')">Сохранить</button>
+        <span class="dur-save-status" id="dur-status-${b.id}"></span>
+      </div>`;
+
                 let actionsHtml = "";
                 if (showActions) {
                     if (b.status === "pending") {
@@ -1257,13 +1254,42 @@
         <div class="status-badge ${b.status}">${statusLabel}</div>
       </div>
       <div class="card-details">
-        <div class="card-detail">✂️ <strong>${escHtml(b.serviceName)}</strong></div>
-        <div class="card-detail">⏱ ${dur}</div>
-        ${b.servicePrice ? `<div class="card-detail">💰 ${escHtml(b.servicePrice)}</div>` : ""}
+        ${serviceHtml}
+        <div class="card-detail">⏱ <strong>${dur}</strong></div>
+        ${priceHtml}
       </div>
       ${noteHtml}
+      ${durEditHtml}
       ${actionsHtml}
     </div>`;
+            }
+
+            async function updateDuration(id) {
+                const input = document.getElementById(`dur-val-${id}`);
+                const statusEl = document.getElementById(`dur-status-${id}`);
+                const newDur = parseInt(input.value) || 60;
+                if (newDur < 5) return;
+
+                input.disabled = true;
+                statusEl.textContent = "…";
+                statusEl.style.color = "var(--text-muted)";
+
+                try {
+                    if (db) {
+                        await db.collection("bookings").doc(id).update({ serviceDuration: newDur });
+                    }
+                    const idx = allBookings.findIndex(b => b.id === id);
+                    if (idx >= 0) allBookings[idx].serviceDuration = newDur;
+                    statusEl.textContent = "✓ Сохранено";
+                    statusEl.style.color = "var(--green)";
+                    setTimeout(() => { statusEl.textContent = ""; }, 2500);
+                } catch (e) {
+                    console.error("updateDuration error:", e);
+                    statusEl.textContent = "Ошибка";
+                    statusEl.style.color = "var(--red)";
+                } finally {
+                    input.disabled = false;
+                }
             }
 
             async function updateStatus(id, newStatus) {
@@ -1315,9 +1341,6 @@
                 // Blocked dates
                 renderBlockedDates();
 
-                // Services
-                renderServicesAdmin();
-
                 // Min date for date picker
                 const today = new Date();
                 document.getElementById("blockDateInput").min =
@@ -1340,23 +1363,25 @@
             }
 
             async function saveSchedule() {
-                const startVal =
-                    document.getElementById("startTimeInput").value;
-                const endVal = document.getElementById("endTimeInput").value;
-                const slot = parseInt(
-                    document.getElementById("slotIntervalInput").value,
-                );
-                localSettings.startHour = parseInt(startVal.split(":")[0]);
-                localSettings.endHour = parseInt(endVal.split(":")[0]);
+                const startVal = document.getElementById("startTimeInput").value;
+                const endVal   = document.getElementById("endTimeInput").value;
+                const slot     = parseInt(document.getElementById("slotIntervalInput").value);
+                localSettings.startHour  = parseInt(startVal.split(":")[0]);
+                localSettings.endHour    = parseInt(endVal.split(":")[0]);
                 localSettings.slotMinutes = slot;
 
-                await saveToFirestore({
-                    workDays: localSettings.workDays,
-                    startHour: localSettings.startHour,
-                    endHour: localSettings.endHour,
-                    slotMinutes: slot,
-                });
-                showStatus("scheduleStatus", "✓ Расписание сохранено");
+                try {
+                    await saveToFirestore({
+                        workDays:   localSettings.workDays,
+                        startHour:  localSettings.startHour,
+                        endHour:    localSettings.endHour,
+                        slotMinutes: slot,
+                    });
+                    showStatus("scheduleStatus", "✓ Расписание сохранено");
+                } catch (e) {
+                    console.error("saveSchedule error:", e);
+                    showStatus("scheduleStatus", "Ошибка: " + e.message, true);
+                }
             }
 
             function renderBlockedDates() {
@@ -1399,49 +1424,20 @@
             }
 
             async function saveBlockedDates() {
-                await saveToFirestore({
-                    blockedDates: localSettings.blockedDates,
-                });
-                showStatus("datesStatus", "✓ Даты сохранены");
-            }
-
-            function renderServicesAdmin() {
-                const list = document.getElementById("servicesAdminList");
-                list.innerHTML = localSettings.services
-                    .map(
-                        (s) => `
-    <div class="service-row" data-id="${s.id}">
-      <div class="service-row-name">${escHtml(s.name)}</div>
-      <div class="service-row-dur">
-        <input class="dur-input" type="number" min="5" max="480" step="5"
-          value="${s.duration}" data-sid="${s.id}" id="dur-${s.id}">
-        мин
-      </div>
-    </div>`,
-                    )
-                    .join("");
-            }
-
-            async function saveServiceDurations() {
-                localSettings.services.forEach((s) => {
-                    const input = document.getElementById(`dur-${s.id}`);
-                    if (input) s.duration = parseInt(input.value) || s.duration;
-                });
-                await saveToFirestore({ services: localSettings.services });
-                settings.services = localSettings.services;
-                showStatus("servicesStatus", "✓ Длительность сохранена");
+                try {
+                    await saveToFirestore({ blockedDates: localSettings.blockedDates });
+                    showStatus("datesStatus", "✓ Даты сохранены");
+                } catch (e) {
+                    console.error("saveBlockedDates error:", e);
+                    showStatus("datesStatus", "Ошибка: " + e.message, true);
+                }
             }
 
             async function saveToFirestore(data) {
-                if (!db) {
-                    return;
-                }
-                try {
-                    await db.collection("settings").doc("config").update(data);
-                    Object.assign(settings, data);
-                } catch (e) {
-                    console.error("saveToFirestore error:", e);
-                }
+                if (!db) throw new Error("Нет подключения к базе данных");
+                // set+merge безопаснее update: работает даже если документ не существует
+                await db.collection("settings").doc("config").set(data, { merge: true });
+                Object.assign(settings, data);
             }
 
             function showStatus(elId, msg, isError) {
