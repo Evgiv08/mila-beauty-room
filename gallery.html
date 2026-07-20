@@ -83,12 +83,12 @@ description: "Галерея работ Mila Beauty Room. Стрижки, окр
 
 <!-- CTA -->
 {% if site.data.page_gallery.cta_title and site.data.page_gallery.cta_title != "" %}
-<section style="padding: 60px 0; text-align:center; background: var(--bg-secondary); border-top: 1px solid var(--border-gold);">
+<section class="section-cta">
   <div class="container">
     <h2 class="fade-in" style="margin-bottom:0.5rem;">{{ site.data.page_gallery.cta_title }}</h2>
     <span class="gold-line fade-in"></span>
     {% if site.data.page_gallery.cta_subtitle and site.data.page_gallery.cta_subtitle != "" %}
-    <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:460px;">
+    <p class="cta-subtitle fade-in" style="max-width:460px;">
       {{ site.data.page_gallery.cta_subtitle }}
     </p>
     {% endif %}

@@ -59,22 +59,6 @@ description: "Mila Beauty Room — авторские стрижки и окра
   </div>
 </section>
 
-<!-- ===== BRAND STRIP (trust signal) ===== -->
-{% if site.data.brands.names and site.data.brands.names != "" %}
-<div class="brand-strip fade-in">
-  <div class="container brand-strip-inner">
-    {% if site.data.brands.label and site.data.brands.label != "" %}
-    <span class="brand-strip-label">{{ site.data.brands.label }}</span>
-    {% endif %}
-    <div class="brand-strip-names">
-      {% for brand in site.data.brands.names %}
-      <span>{{ brand }}</span>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-{% endif %}
-
 <!-- ===== SERVICES ===== -->
 {% if site.data.services.list and site.data.services.list != "" %}
 <section id="services" style="background: var(--bg-secondary);">
@@ -96,8 +80,32 @@ description: "Mila Beauty Room — авторские стрижки и окра
 </section>
 {% endif %}
 
+<!-- ===== PORTFOLIO PREVIEW ===== -->
+{% assign preview_photos = site.data.gallery.grid | slice: 0, 4 %}
+{% if preview_photos and preview_photos != "" %}
+<section id="portfolio">
+  <div class="container">
+    <h2 class="section-title fade-in">Мои работы</h2>
+    <span class="gold-line fade-in"></span>
+    <p class="section-subtitle fade-in">Немного вдохновения из моего портфолио</p>
+
+    <div class="portfolio-preview-grid">
+      {% for photo in preview_photos %}
+      <div class="portfolio-preview-item fade-in">
+        <img src="{{ photo.image }}" alt="{{ photo.alt }}" loading="lazy" />
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="portfolio-preview-more fade-in">
+      <a href="{{ '/gallery.html' | relative_url }}" class="btn btn-outline">Смотреть всю галерею</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <!-- ===== ABOUT ===== -->
-<section id="about">
+<section id="about" style="background: var(--bg-secondary);">
   <div class="container">
     <div class="about-grid">
       {% if site.data.about.image and site.data.about.image != "" %}
@@ -141,12 +149,12 @@ description: "Mila Beauty Room — авторские стрижки и окра
 
 <!-- ===== CTA STRIP ===== -->
 {% if site.data.cta.title and site.data.cta.title != "" %}
-<section style="padding: 60px 0; background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04)); border-top: 1px solid var(--border-gold); border-bottom: 1px solid var(--border-gold);">
-  <div class="container" style="text-align:center;">
+<section class="cta-strip">
+  <div class="container">
     <h2 class="fade-in">{{ site.data.cta.title }}</h2>
     <span class="gold-line fade-in"></span>
     {% if site.data.cta.subtitle and site.data.cta.subtitle != "" %}
-    <p class="fade-in" style="color:var(--text-muted); margin: 1rem auto 2rem; max-width:500px; font-size:1.05rem;">
+    <p class="cta-subtitle fade-in">
       {{ site.data.cta.subtitle }}
     </p>
     {% endif %}
@@ -164,7 +172,7 @@ description: "Mila Beauty Room — авторские стрижки и окра
     <span class="gold-line fade-in"></span>
     <p class="section-subtitle fade-in">{{ site.data.contacts.helpText }}</p>
 
-    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:32px; margin-top: 1rem;">
+    <div class="contact-grid">
       {% if site.data.contacts.address and site.data.contacts.address != "" %}
       <div class="service-card fade-in" style="text-align:left;">
         <span class="service-icon">{% include icon.html name="pin" size=28 %}</span>

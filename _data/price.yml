@@ -38,7 +38,7 @@ categories:
     title: "Окрашивание"
     items:
       - name: "Однотонное окрашивание"
-        description: "1 длина, 2 длина, 3 длина, 4 длина"
+        description: "Длина 1, 2, 3, 4"
         duration: ""
         price: "от 40 / 50 / 60 / 70 €"
       - name: "Мелирование (короткие волосы)"
@@ -78,11 +78,11 @@ categories:
     title: "Уход за волосами"
     items:
       - name: "Горячий ботокс"
-        description: "1 длина, 2 длина, 3 длина"
+        description: "Длина 1, 2, 3"
         duration: ""
         price: "от 70 / 80 / 130 €"
       - name: "Холодный ботокс"
-        description: "1 длина, 2 длина, 3 длина"
+        description: "Длина 1, 2, 3"
         duration: ""
         price: "от 50 / 60 / 90 €"
       - name: "Коррекция и окрашивание бровей"
