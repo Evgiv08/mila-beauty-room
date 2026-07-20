@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Прайс-лист"
-description: "Актуальный прайс-лист салона Beauty Studio. Стрижки, окрашивание, маникюр, макияж."
+description: "Актуальный прайс-лист Mila Beauty Room. Стрижки, окрашивание, укладки, уход за волосами."
 ---
 
 <!-- ===== PAGE HERO ===== -->
@@ -28,7 +28,7 @@ description: "Актуальный прайс-лист салона Beauty Studi
       {% for category in site.data.price.categories %}
       <div class="price-category fade-in">
         <div class="price-category-header">
-          {% if category.icon and category.icon != "" %}<div class="price-category-icon">{{ category.icon }}</div>{% endif %}
+          {% if category.icon and category.icon != "" %}<div class="price-category-icon">{% include icon.html name=category.icon size=24 %}</div>{% endif %}
           {% if category.title and category.title != "" %}<div><h2>{{ category.title }}</h2></div>{% endif %}
         </div>
         <div class="price-list">

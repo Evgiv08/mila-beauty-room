@@ -2,7 +2,7 @@
 # Каждая категория — icon, title, items[]
 
 categories:
-  - icon: "✂️"
+  - icon: "scissors"
     title: "Стрижки & Укладки"
     items:
       - name: "Женская стрижка"
@@ -34,7 +34,7 @@ categories:
         duration: ""
         price: "от 15 €"
 
-  - icon: "🎨"
+  - icon: "droplet"
     title: "Окрашивание"
     items:
       - name: "Однотонное окрашивание"
@@ -74,7 +74,7 @@ categories:
         duration: ""
         price: "от 70-90 €"
 
-  - icon: "💆"
+  - icon: "sparkles"
     title: "Уход за волосами"
     items:
       - name: "Горячий ботокс"
@@ -94,7 +94,7 @@ categories:
         duration: ""
         price: "от 20 €"
 
-  - icon: ""
+  - icon: "bottle"
     title: "Dr.Sorbie"
     items:
       - name: "VOLUME SHAMPOO"

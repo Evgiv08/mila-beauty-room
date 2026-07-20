@@ -10,7 +10,7 @@
         <li><a href="{{ '/price.html' | relative_url }}"{% if page.url contains 'price' %} class="active"{% endif %}>Прайс</a></li>
         <li><a href="{{ '/gallery.html' | relative_url }}"{% if page.url contains 'gallery' %} class="active"{% endif %}>Галерея</a></li>
         <li>
-          <a href="{{ '/booking.html' | relative_url }}" class="btn btn-outline" style="padding:8px 22px;font-size:0.8rem;">
+          <a href="{{ '/' | relative_url }}#contact" class="btn btn-outline" style="padding:8px 22px;font-size:0.8rem;">
             {{ site.data.header.nav_book_label | default: "Записаться" }}
           </a>
         </li>
@@ -25,7 +25,7 @@
       <a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.url == '/index.html' %} class="active"{% endif %}>Главная</a>
       <a href="{{ '/price.html' | relative_url }}"{% if page.url contains 'price' %} class="active"{% endif %}>Прайс</a>
       <a href="{{ '/gallery.html' | relative_url }}"{% if page.url contains 'gallery' %} class="active"{% endif %}>Галерея</a>
-      <a href="{{ '/booking.html' | relative_url }}">{{ site.data.header.nav_book_label | default: "Записаться" }}</a>
+      <a href="{{ '/' | relative_url }}#contact">{{ site.data.header.nav_book_label | default: "Записаться" }}</a>
     </div>
   </div>
 </nav>

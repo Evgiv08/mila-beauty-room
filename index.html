@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Салон красоты"
-description: "Beauty Studio — элитный салон красоты. Стрижки, окрашивание, уход за кожей и ногтевой сервис."
+title: "Мастер по стрижкам и окрашиванию"
+description: "Mila Beauty Room — авторские стрижки и окрашивание волос в Софии. Балаяж, airtouch, уход премиум-класса."
 ---
 
 <!-- ===== HERO ===== -->
@@ -59,6 +59,22 @@ description: "Beauty Studio — элитный салон красоты. Стр
   </div>
 </section>
 
+<!-- ===== BRAND STRIP (trust signal) ===== -->
+{% if site.data.brands.names and site.data.brands.names != "" %}
+<div class="brand-strip fade-in">
+  <div class="container brand-strip-inner">
+    {% if site.data.brands.label and site.data.brands.label != "" %}
+    <span class="brand-strip-label">{{ site.data.brands.label }}</span>
+    {% endif %}
+    <div class="brand-strip-names">
+      {% for brand in site.data.brands.names %}
+      <span>{{ brand }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
 <!-- ===== SERVICES ===== -->
 {% if site.data.services.list and site.data.services.list != "" %}
 <section id="services" style="background: var(--bg-secondary);">
@@ -70,7 +86,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
     <div class="services-grid">
       {% for service in site.data.services.list %}
       <div class="service-card fade-in">
-        {% if service.icon and service.icon != "" %}<span class="service-icon">{{ service.icon }}</span>{% endif %}
+        {% if service.icon and service.icon != "" %}<span class="service-icon">{% include icon.html name=service.icon size=28 %}</span>{% endif %}
         {% if service.title and service.title != "" %}<h3>{{ service.title }}</h3>{% endif %}
         {% if service.description and service.description != "" %}<p>{{ service.description }}</p>{% endif %}
       </div>
@@ -151,7 +167,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
     <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:32px; margin-top: 1rem;">
       {% if site.data.contacts.address and site.data.contacts.address != "" %}
       <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">📍</span>
+        <span class="service-icon">{% include icon.html name="pin" size=28 %}</span>
         <h3 style="margin-bottom:0.5rem;">Адрес</h3>
         <p>{{ site.data.contacts.address }}</p>
         <a href="https://maps.app.goo.gl/CzVRaMVYpdrxvfaB7?g_st=ipc" target="_blank">Google maps</a>
@@ -159,7 +175,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
       {% endif %}
       {% if site.data.contacts.phone and site.data.contacts.phone != "" %}
       <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">📞</span>
+        <span class="service-icon">{% include icon.html name="phone" size=28 %}</span>
         <h3 style="margin-bottom:0.5rem;">Телефон</h3>
         <p><a href="tel:{{ site.data.contacts.phone }}">{{ site.data.contacts.phone }}</a></p>
         {% if site.data.contacts.phone2 and site.data.contacts.phone2 != "" %}
@@ -169,7 +185,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
       {% endif %}
       {% if site.data.contacts.hours_weekdays and site.data.contacts.hours_weekdays != "" or site.data.contacts.hours_weekends and site.data.contacts.hours_weekends != "" %}
       <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">⏰</span>
+        <span class="service-icon">{% include icon.html name="clock" size=28 %}</span>
         <h3 style="margin-bottom:0.5rem;">Часы работы</h3>
         {% if site.data.contacts.hours_weekdays and site.data.contacts.hours_weekdays != "" %}<p>{{ site.data.contacts.hours_weekdays }}</p>{% endif %}
         {% if site.data.contacts.hours_weekends and site.data.contacts.hours_weekends != "" %}<p>{{ site.data.contacts.hours_weekends }}</p>{% endif %}
@@ -177,7 +193,7 @@ description: "Beauty Studio — элитный салон красоты. Стр
       {% endif %}
       {% if site.data.contacts.email and site.data.contacts.email != "" or site.data.contacts.instagram and site.data.contacts.instagram != "" or site.data.contacts.facebook and site.data.contacts.facebook != "" %}
       <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">✉️</span>
+        <span class="service-icon">{% include icon.html name="mail" size=28 %}</span>
         <h3 style="margin-bottom:0.5rem;">Соцсети</h3>
         {% if site.data.contacts.email and site.data.contacts.email != "" %}
         <p><a href="mailto:{{ site.data.contacts.email }}">{{ site.data.contacts.email }}</a></p>

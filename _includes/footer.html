@@ -25,14 +25,14 @@
         <h4>Контакты</h4>
         <ul class="footer-contacts">
           {% if site.data.contacts.address and site.data.contacts.address != "" %}
-          <li><span class="ico">📍</span>{{ site.data.contacts.address }}</li>
+          <li><span class="ico">{% include icon.html name="pin" size=16 %}</span>{{ site.data.contacts.address }}</li>
           <a href="https://maps.app.goo.gl/CzVRaMVYpdrxvfaB7?g_st=ipc" target="_blank">Google maps</a>
           {% endif %}
           {% if site.data.contacts.phone and site.data.contacts.phone != "" %}
-          <li><span class="ico">📞</span>{{ site.data.contacts.phone }}</li>
+          <li><span class="ico">{% include icon.html name="phone" size=16 %}</span>{{ site.data.contacts.phone }}</li>
           {% endif %}
           {% if site.data.contacts.hours_weekdays and site.data.contacts.hours_weekdays != "" %}
-          <li><span class="ico">⏰</span>{{ site.data.contacts.hours_weekdays }}</li>
+          <li><span class="ico">{% include icon.html name="clock" size=16 %}</span>{{ site.data.contacts.hours_weekdays }}</li>
           {% endif %}
         </ul>
       </div>

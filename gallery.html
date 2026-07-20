@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Галерея"
-description: "Галерея работ мастеров Beauty Studio. Стрижки, окрашивание, маникюр, макияж."
+description: "Галерея работ Mila Beauty Room. Стрижки, окрашивание, укладки, уход за волосами."
 ---
 
 <!-- ===== PAGE HERO ===== -->
@@ -74,7 +74,7 @@ description: "Галерея работ мастеров Beauty Studio. Стри
         {% if photo.image and photo.image != "" %}
         <img src="{{ photo.image }}" alt="{{ photo.alt }}" loading="lazy" />
         {% endif %}
-        <div class="gallery-overlay"><div class="gallery-overlay-icon">⊕</div></div>
+        <div class="gallery-overlay"><div class="gallery-overlay-icon">{% include icon.html name="expand" size=22 %}</div></div>
       </div>
       {% endfor %}
     </div>
