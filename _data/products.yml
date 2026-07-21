@@ -1,0 +1,319 @@
+# Раздел "Товары" на странице прайса — карточки с фото, описанием и ценой
+# Не ссылки, просто витрина продукции для дома. Данные и фото — из официального
+# прайса Dr.Sorbie и каталога дистрибьютора Grace Pro.
+
+section:
+  eyebrow: "Продукция для дома"
+  title: "Товары Dr.Sorbie"
+  subtitle: "Профессиональный уход, который можно взять с собой"
+
+items:
+  - image: "/assets/images/products/volume-shampoo.jpg"
+    name: "Volume Shampoo"
+    description: "Фитошампунь-антихлор для придания объёма. Для тонких, ослабленных и лишённых объёма волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "27 €"
+      - volume: "1000 мл"
+        price: "40 €"
+
+  - image: "/assets/images/products/volume-mask.jpg"
+    name: "Volume Mask"
+    description: "Фитомаска-антихлор для сохранения объёма. Для тонких, редких и повреждённых волос."
+    sizes:
+      - volume: "75 мл"
+        price: "11 €"
+      - volume: "250 мл"
+        price: "32 €"
+      - volume: "500 мл"
+        price: "47 €"
+
+  - image: "/assets/images/products/repair-shampoo.jpg"
+    name: "Repair Shampoo"
+    description: "Восстанавливающий фитошампунь-антихлор. Для сухих, повреждённых, средних и жёстких волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "27 €"
+      - volume: "1000 мл"
+        price: "40 €"
+
+  - image: "/assets/images/products/repair-mask.jpg"
+    name: "Repair Mask"
+    description: "Восстанавливающая фитомаска для сухих, жёстких, пористых и повреждённых волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "250 мл"
+        price: "29 €"
+      - volume: "500 мл"
+        price: "40 €"
+
+  - image: "/assets/images/products/treatment-shampoo.jpg"
+    name: "Treatment Shampoo"
+    description: "Питательный антивозрастной фитошампунь-антихлор. Для сухих, химически обработанных, возрастных и окрашенных волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "27 €"
+      - volume: "1000 мл"
+        price: "40 €"
+
+  - image: "/assets/images/products/smooth-mask-forte.jpg"
+    name: "Smooth Mask Forte"
+    description: "Разглаживающая фитомаска с кондиционирующими протеинами и гиалуроновой кислотой. Для сухих, жёстких, пористых и повреждённых волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "250 мл"
+        price: "28 €"
+      - volume: "500 мл"
+        price: "39 €"
+
+  - image: "/assets/images/products/hair-loss-shampoo.jpg"
+    name: "Hair Loss Shampoo"
+    description: "Терапевтический шампунь на натуральной основе для укрепления корней волос. Бережное очищение волос и кожи головы."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "32 €"
+      - volume: "1000 мл"
+        price: "46 €"
+
+  - image: "/assets/images/products/dandruff-shampoo.jpg"
+    name: "Dandruff Shampoo"
+    description: "Терапевтический фитошампунь от перхоти. Работает в три фазы, для всех типов волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "32 €"
+      - volume: "1000 мл"
+        price: "46 €"
+
+  - image: "/assets/images/products/sensitive-scalp-shampoo.jpg"
+    name: "Sensitive Scalp Relaxing Shampoo"
+    description: "Терапевтический шампунь для чувствительной и раздражённой кожи головы. Уменьшает зуд и покраснение, обеспечивает долгосрочное облегчение."
+    sizes:
+      - volume: "400 мл"
+        price: "30 €"
+
+  - image: "/assets/images/products/deep-clean-shampoo.jpg"
+    name: "Deep Clean Shampoo"
+    description: "Глубоко очищающий фитошампунь-антихлор. Трёхступенчатая система очищения без СЛС, работает в нейтральной среде pH."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "27 €"
+      - volume: "1000 мл"
+        price: "40 €"
+
+  - image: "/assets/images/products/silk-deep-conditioner.jpg"
+    name: "Silk Deep Conditioner"
+    description: "Шёлковый глубокий кондиционер. Для всех типов волос с повышенной пористостью, оптимален для грубых и вьющихся волос."
+    sizes:
+      - volume: "75 мл"
+        price: "11 €"
+      - volume: "400 мл"
+        price: "33 €"
+      - volume: "1000 мл"
+        price: "46 €"
+
+  - image: "/assets/images/products/moisture-conditioner.jpg"
+    name: "Moisture Conditioner"
+    description: "Увлажняющий фитокондиционер на основе натуральных ингредиентов. Для всех типов волос."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "27 €"
+      - volume: "1000 мл"
+        price: "40 €"
+
+  - image: "/assets/images/products/shampling.jpg"
+    name: "Shampling Clarifying Peeling Shampoo"
+    description: "Очищающий шампунь-пилинг для жирной и перегруженной кожи головы. Снимает накопления и мёртвые клетки."
+    sizes:
+      - volume: "150 мл"
+        price: "36 €"
+
+  - image: "/assets/images/products/scalp-b.jpg"
+    name: "Scalp-B Nourishing Scalp Balancer"
+    description: "Трихологический балансер для ежедневного применения. Питает, укрепляет и балансирует кожу головы."
+    sizes:
+      - volume: "100 мл"
+        price: "39 €"
+
+  - image: "/assets/images/products/scalp-t.jpg"
+    name: "Scalp-T Trichology Therapy Elixir"
+    description: "Терапевтическая активная сыворотка против воспалений, себорейных очагов и перхоти. Дополнение к любому шампуню."
+    sizes:
+      - volume: "100 мл"
+        price: "39 €"
+
+  - image: "/assets/images/products/scalp-r.jpg"
+    name: "Scalp-R Trichology Therapy Elixir"
+    description: "Терапевтическая сыворотка для роста волос и баланса кожи головы. Профилактика выпадения волос."
+    sizes:
+      - volume: "100 мл"
+        price: "39 €"
+
+  - image: "/assets/images/products/scalp-s.jpg"
+    name: "Scalp-S Soothing Skin Serum"
+    description: "Терапевтическое средство для успокоения чувствительной и раздражённой кожи головы. Быстрое и эффективное облегчение."
+    sizes:
+      - volume: "100 мл"
+        price: "45 €"
+
+  - image: "/assets/images/products/protector.jpg"
+    name: "Protector"
+    description: "Профессиональное средство для защиты кожи головы при окрашивании или осветлении. Блокирует агрессивное воздействие химии."
+    sizes:
+      - volume: "400 мл"
+        price: "52 €"
+
+  - image: "/assets/images/products/vitamin-color.jpg"
+    name: "Vitamin Color"
+    description: "Комплекс натуральных витаминов и масел для эффективной защиты окрашенных волос и кожи головы."
+    sizes:
+      - volume: "50 мл"
+        price: "36 €"
+
+  - image: "/assets/images/products/vita-fluid.jpg"
+    name: "Vita Fluid"
+    description: "Комплекс масел, протеинов и аминокислот. Несмываемое средство для тонких и нормальных волос, нуждающихся в питании и защите."
+    sizes:
+      - volume: "150 мл"
+        price: "42 €"
+
+  - image: "/assets/images/products/therapy-oil.jpg"
+    name: "Therapy Oil"
+    description: "Комплекс лечебных масел и аминокислот. Для сухих, жёстких и повреждённых волос. Не требует смывания."
+    sizes:
+      - volume: "100 мл"
+        price: "36 €"
+
+  - image: "/assets/images/products/pure-keratin.jpg"
+    name: "Pure Keratin"
+    description: "Уникальный комплекс на основе высококонцентрированного чистого кератина."
+    sizes:
+      - volume: "50 мл"
+        price: "47 €"
+
+  - image: "/assets/images/products/vita-booster.jpg"
+    name: "Vita Booster"
+    description: "Кератиновый крем для экстремально повреждённых волос, нуждающихся в интенсивном уходе и реконструкции."
+    sizes:
+      - volume: "75 мл"
+        price: "12 €"
+      - volume: "250 мл"
+        price: "35 €"
+
+  - image: "/assets/images/products/strip-it.jpg"
+    name: "Strip-It"
+    description: "Ионовый хелатирующий детокс для волос и кожи головы. Ускоряет химические процессы, придаёт блеск."
+    sizes:
+      - volume: "400 мл"
+        price: "57 €"
+
+  - image: "/assets/images/products/vita-liquid.jpg"
+    name: "Vita Liquid"
+    description: "Активатор кислотной pH-терапии. Восстанавливающая жидкость с фитоэкстрактами, аминокислотами и витаминами."
+    sizes:
+      - volume: "400 мл"
+        price: "46 €"
+
+  - image: "/assets/images/products/eco-lovely-brush.jpg"
+    name: "Eco Lovely Brush"
+    description: "Уникальная щётка для лёгкого и удобного расчёсывания. Экологичные материалы, V-образный дизайн, термостойкая."
+    sizes:
+      - volume: "1 шт"
+        price: "10 €"
+
+  - image: "/assets/images/products/amino-acids-booster.jpg"
+    name: "Amino Acids Booster"
+    description: "Бустер на основе аминокислот с глубокой проникающей и восстановительной способностью."
+    sizes:
+      - volume: "100 мл"
+        price: "44 €"
+
+  - image: "/assets/images/products/proteins-booster.jpg"
+    name: "Proteins Booster"
+    description: "Бустер на основе протеинов. Укрепляет стержень волоса, придаёт эластичность и блеск."
+    sizes:
+      - volume: "100 мл"
+        price: "51 €"
+
+  - image: "/assets/images/products/ceramide-lipids-booster.jpg"
+    name: "Ceramide & Lipids Booster"
+    description: "Бустер «Липиды»: церамиды, фосфолипиды, холестерол. Возвращает волосам здоровый вид и защиту от внешних факторов."
+    sizes:
+      - volume: "100 мл"
+        price: "47 €"
+
+  - image: "/assets/images/products/polymers-booster.jpg"
+    name: "Polymers Booster"
+    description: "Бустер «Полимер» с силиконами разной плотности. Делает волосы послушными, гладкими и блестящими."
+    sizes:
+      - volume: "100 мл"
+        price: "54 €"
+
+  - image: "/assets/images/products/betaine-shampoo.jpg"
+    name: "Betaine Shampoo"
+    description: "Шампунь на основе Бетаина для сухих и пористых волос. Смягчает волосы, устраняет пористость и предотвращает ломкость."
+    sizes:
+      - volume: "75 мл"
+        price: "10 €"
+      - volume: "400 мл"
+        price: "32 €"
+      - volume: "1000 мл"
+        price: "45 €"
+
+  - image: "/assets/images/products/betaine-conditioner.jpg"
+    name: "Betaine Conditioner"
+    description: "Кондиционер разглаживающего действия для всех типов волос. Смягчает и предотвращает ломкость."
+    sizes:
+      - volume: "400 мл"
+        price: "36 €"
+      - volume: "1000 мл"
+        price: "50 €"
+
+  - image: "/assets/images/products/betaine-mask.jpg"
+    name: "Betaine Mask"
+    description: "Маска на основе Бетаина и гидролизованного протеина пшеницы. Глубокое восстановление и продление эффекта процедур."
+    sizes:
+      - volume: "250 мл"
+        price: "33 €"
+      - volume: "500 мл"
+        price: "47 €"
+
+  - image: "/assets/images/products/unfrizz-oil-complex.jpg"
+    name: "UnFrizz Oil Complex"
+    description: "Комплекс лечебных масел: лён, тыква, чёрный тмин, испанский шалфей. Придаёт блеск и эластичность."
+    sizes:
+      - volume: "100 мл"
+        price: "42 €"
+
+  - image: "/assets/images/products/shikki.jpg"
+    name: "Shikki Leave-In Multi Mask"
+    description: "Несмываемая маска для волос с накопительным эффектом. Питание, восстановление и защита для всех типов волос."
+    sizes:
+      - volume: "100 мл"
+        price: "30 €"
+
+  - image: "/assets/images/products/modifix.jpg"
+    name: "Modifix — реконструкция волос"
+    description: "Аминокислотная система модификации и реконструкции волос. Три формулы: Thick Natural, Medium, Blond & Damaged."
+    sizes:
+      - volume: "Thick Natural, 500 мл"
+        price: "161 €"
+      - volume: "Medium, 500 мл"
+        price: "161 €"
+      - volume: "Blond & Damaged, 500 мл"
+        price: "161 €"
