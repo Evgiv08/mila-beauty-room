@@ -20,46 +20,9 @@ description: "Галерея работ Mila Beauty Room. Стрижки, окр
   </div>
 </div>
 
-<!-- ===== CAROUSEL ===== -->
-{% if site.data.gallery.carousel and site.data.gallery.carousel != "" %}
-<section class="carousel-section">
-  <div class="container">
-    <div class="carousel-wrap" id="mainCarousel">
-      <div class="carousel-track" id="carouselTrack">
-
-        {% for slide in site.data.gallery.carousel %}
-        <div class="carousel-slide">
-          {% if slide.image and slide.image != "" %}
-          <img src="{{ slide.image }}" alt="{{ slide.caption }}" loading="lazy" />
-          {% endif %}
-          {% if slide.category_label or slide.caption %}
-          <div class="carousel-caption">
-            {% if slide.category_label and slide.category_label != "" %}<span>{{ slide.category_label }}</span>{% endif %}
-            {{ slide.caption }}
-          </div>
-          {% endif %}
-        </div>
-        {% endfor %}
-
-      </div>
-
-      <button class="carousel-btn carousel-btn-prev" id="prevBtn" aria-label="Назад">&#8592;</button>
-      <button class="carousel-btn carousel-btn-next" id="nextBtn" aria-label="Вперёд">&#8594;</button>
-    </div>
-
-    <div class="carousel-dots" id="carouselDots"></div>
-  </div>
-</section>
-{% endif %}
-
 <!-- ===== GALLERY GRID ===== -->
 <section class="gallery-section">
   <div class="container">
-    {% if site.data.page_gallery.grid_title and site.data.page_gallery.grid_title != "" %}
-    <h2 class="section-title fade-in">{{ site.data.page_gallery.grid_title }}</h2>
-    {% endif %}
-    <span class="gold-line fade-in"></span>
-
     <!-- <div class="gallery-filter fade-in">
       <button class="filter-btn active" data-filter="all">xvxvxv</button>
       <button class="filter-btn" data-filter="hair">Волосы</button>
@@ -104,5 +67,8 @@ description: "Галерея работ Mila Beauty Room. Стрижки, окр
   <div class="lightbox-inner">
     <img src="" alt="" id="lightboxImg" />
     <button class="lightbox-close" id="lightboxClose">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Предыдущее фото">&#8592;</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Следующее фото">&#8594;</button>
+    <span class="lightbox-counter" id="lightboxCounter"></span>
   </div>
 </div>

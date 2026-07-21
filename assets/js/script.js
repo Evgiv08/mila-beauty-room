@@ -169,11 +169,12 @@ document.addEventListener('DOMContentLoaded', () => {
      PRODUCT SEARCH FILTER (price page)
      ============================================= */
   const productSearchInput = document.getElementById('productSearch');
+  const productSearchClear = document.getElementById('productSearchClear');
   const productCards       = document.querySelectorAll('.product-card');
   const productSearchEmpty = document.getElementById('productSearchEmpty');
 
   if (productSearchInput && productCards.length) {
-    productSearchInput.addEventListener('input', () => {
+    function filterProducts() {
       const query = productSearchInput.value.trim().toLowerCase();
       let visibleCount = 0;
 
@@ -186,27 +187,51 @@ document.addEventListener('DOMContentLoaded', () => {
       if (productSearchEmpty) {
         productSearchEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
       }
-    });
+      if (productSearchClear) {
+        productSearchClear.classList.toggle('visible', query.length > 0);
+      }
+    }
+
+    productSearchInput.addEventListener('input', filterProducts);
+
+    if (productSearchClear) {
+      productSearchClear.addEventListener('click', () => {
+        productSearchInput.value = '';
+        filterProducts();
+        productSearchInput.focus();
+      });
+    }
   }
 
   /* =============================================
-     LIGHTBOX
+     LIGHTBOX (with prev/next navigation through the gallery)
      ============================================= */
   const lightbox      = document.getElementById('lightbox');
   const lightboxImg   = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev  = document.getElementById('lightboxPrev');
+  const lightboxNext  = document.getElementById('lightboxNext');
+  const lightboxCounter = document.getElementById('lightboxCounter');
 
   if (lightbox && galleryItems.length) {
-    galleryItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const src = item.dataset.src || item.querySelector('img').src;
-        const alt = item.querySelector('img').alt;
-        lightboxImg.src = src;
-        lightboxImg.alt = alt;
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
-    });
+    const items = Array.from(galleryItems);
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      currentIndex = (index + items.length) % items.length;
+      const item = items[currentIndex];
+      const src = item.dataset.src || item.querySelector('img').src;
+      const alt = item.querySelector('img').alt;
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+    }
+
+    function openLightbox(index) {
+      showSlide(index);
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
     function closeLightbox() {
       lightbox.classList.remove('open');
@@ -214,17 +239,37 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { lightboxImg.src = ''; }, 300);
     }
 
+    items.forEach((item, index) => {
+      item.addEventListener('click', () => openLightbox(index));
+    });
+
     if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxPrev) lightboxPrev.addEventListener('click', () => showSlide(currentIndex - 1));
+    if (lightboxNext) lightboxNext.addEventListener('click', () => showSlide(currentIndex + 1));
 
     lightbox.addEventListener('click', e => {
       if (e.target === lightbox) closeLightbox();
     });
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-        closeLightbox();
-      }
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape')    closeLightbox();
+      if (e.key === 'ArrowLeft')  showSlide(currentIndex - 1);
+      if (e.key === 'ArrowRight') showSlide(currentIndex + 1);
     });
+
+    // Swipe support
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', e => {
+      const delta = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(delta) > 40) {
+        delta < 0 ? showSlide(currentIndex + 1) : showSlide(currentIndex - 1);
+      }
+    }, { passive: true });
   }
 
   /* =============================================
