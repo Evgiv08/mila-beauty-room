@@ -166,6 +166,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =============================================
+     PRODUCT SEARCH FILTER (price page)
+     ============================================= */
+  const productSearchInput = document.getElementById('productSearch');
+  const productCards       = document.querySelectorAll('.product-card');
+  const productSearchEmpty = document.getElementById('productSearchEmpty');
+
+  if (productSearchInput && productCards.length) {
+    productSearchInput.addEventListener('input', () => {
+      const query = productSearchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      productCards.forEach(card => {
+        const match = !query || card.textContent.toLowerCase().includes(query);
+        card.style.display = match ? '' : 'none';
+        if (match) visibleCount++;
+      });
+
+      if (productSearchEmpty) {
+        productSearchEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  }
+
+  /* =============================================
      LIGHTBOX
      ============================================= */
   const lightbox      = document.getElementById('lightbox');
