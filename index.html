@@ -172,47 +172,55 @@ description: "Mila Beauty Room — авторские стрижки и окра
     <span class="gold-line fade-in"></span>
     <p class="section-subtitle fade-in">{{ site.data.contacts.helpText }}</p>
 
-    <div class="contact-grid">
+    <div class="contact-info-card fade-in">
       {% if site.data.contacts.address and site.data.contacts.address != "" %}
-      <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">{% include icon.html name="pin" size=28 %}</span>
-        <h3 style="margin-bottom:0.5rem;">Адрес</h3>
-        <p>{{ site.data.contacts.address }}</p>
-        <a href="https://maps.app.goo.gl/CzVRaMVYpdrxvfaB7?g_st=ipc" target="_blank">Google maps</a>
+      <div class="contact-info-row">
+        <span class="contact-info-icon">{% include icon.html name="pin" size=22 %}</span>
+        <div class="contact-info-body">
+          <h3>Адрес</h3>
+          <p>{{ site.data.contacts.address }}</p>
+          <a href="https://maps.app.goo.gl/CzVRaMVYpdrxvfaB7?g_st=ipc" target="_blank">Google maps</a>
+        </div>
       </div>
       {% endif %}
       {% if site.data.contacts.phone and site.data.contacts.phone != "" %}
-      <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">{% include icon.html name="phone" size=28 %}</span>
-        <h3 style="margin-bottom:0.5rem;">Телефон</h3>
-        <p><a href="tel:{{ site.data.contacts.phone }}">{{ site.data.contacts.phone }}</a></p>
-        {% if site.data.contacts.phone2 and site.data.contacts.phone2 != "" %}
-        <p><a href="tel:{{ site.data.contacts.phone2 }}">{{ site.data.contacts.phone2 }}</a></p>
-        {% endif %}
+      <div class="contact-info-row">
+        <span class="contact-info-icon">{% include icon.html name="phone" size=22 %}</span>
+        <div class="contact-info-body">
+          <h3>Телефон</h3>
+          <p><a href="tel:{{ site.data.contacts.phone }}">{{ site.data.contacts.phone }}</a></p>
+          {% if site.data.contacts.phone2 and site.data.contacts.phone2 != "" %}
+          <p><a href="tel:{{ site.data.contacts.phone2 }}">{{ site.data.contacts.phone2 }}</a></p>
+          {% endif %}
+        </div>
       </div>
       {% endif %}
       {% if site.data.contacts.hours_weekdays and site.data.contacts.hours_weekdays != "" or site.data.contacts.hours_weekends and site.data.contacts.hours_weekends != "" %}
-      <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">{% include icon.html name="clock" size=28 %}</span>
-        <h3 style="margin-bottom:0.5rem;">Часы работы</h3>
-        {% if site.data.contacts.hours_weekdays and site.data.contacts.hours_weekdays != "" %}<p>{{ site.data.contacts.hours_weekdays }}</p>{% endif %}
-        {% if site.data.contacts.hours_weekends and site.data.contacts.hours_weekends != "" %}<p>{{ site.data.contacts.hours_weekends }}</p>{% endif %}
+      <div class="contact-info-row">
+        <span class="contact-info-icon">{% include icon.html name="clock" size=22 %}</span>
+        <div class="contact-info-body">
+          <h3>Часы работы</h3>
+          {% if site.data.contacts.hours_weekdays and site.data.contacts.hours_weekdays != "" %}<p>{{ site.data.contacts.hours_weekdays }}</p>{% endif %}
+          {% if site.data.contacts.hours_weekends and site.data.contacts.hours_weekends != "" %}<p>{{ site.data.contacts.hours_weekends }}</p>{% endif %}
+        </div>
       </div>
       {% endif %}
       {% if site.data.contacts.email and site.data.contacts.email != "" or site.data.contacts.instagram and site.data.contacts.instagram != "" or site.data.contacts.facebook and site.data.contacts.facebook != "" %}
-      <div class="service-card fade-in" style="text-align:left;">
-        <span class="service-icon">{% include icon.html name="mail" size=28 %}</span>
-        <h3 style="margin-bottom:0.5rem;">Соцсети</h3>
-        {% if site.data.contacts.email and site.data.contacts.email != "" %}
-        <p><a href="mailto:{{ site.data.contacts.email }}">{{ site.data.contacts.email }}</a></p>
-        {% endif %}
-        {% if site.data.contacts.instagram and site.data.contacts.instagram != "" or site.data.contacts.facebook and site.data.contacts.facebook != "" %}
-        <p style="margin-top:6px;">
-          {% if site.data.contacts.instagram and site.data.contacts.instagram != "" %}<a href="{{ site.data.contacts.instagram }}" target="_blank">Instagram</a>{% endif %}
-          {% if site.data.contacts.instagram and site.data.contacts.instagram != "" and site.data.contacts.facebook and site.data.contacts.facebook != "" %} &nbsp;·&nbsp; {% endif %}
-          {% if site.data.contacts.facebook and site.data.contacts.facebook != "" %}<a href="{{ site.data.contacts.facebook }}" target="_blank">Facebook</a>{% endif %}
-        </p>
-        {% endif %}
+      <div class="contact-info-row">
+        <span class="contact-info-icon">{% include icon.html name="mail" size=22 %}</span>
+        <div class="contact-info-body">
+          <h3>Соцсети</h3>
+          {% if site.data.contacts.email and site.data.contacts.email != "" %}
+          <p><a href="mailto:{{ site.data.contacts.email }}">{{ site.data.contacts.email }}</a></p>
+          {% endif %}
+          {% if site.data.contacts.instagram and site.data.contacts.instagram != "" or site.data.contacts.facebook and site.data.contacts.facebook != "" %}
+          <p style="margin-top:6px;">
+            {% if site.data.contacts.instagram and site.data.contacts.instagram != "" %}<a href="{{ site.data.contacts.instagram }}" target="_blank">Instagram</a>{% endif %}
+            {% if site.data.contacts.instagram and site.data.contacts.instagram != "" and site.data.contacts.facebook and site.data.contacts.facebook != "" %} &nbsp;·&nbsp; {% endif %}
+            {% if site.data.contacts.facebook and site.data.contacts.facebook != "" %}<a href="{{ site.data.contacts.facebook }}" target="_blank">Facebook</a>{% endif %}
+          </p>
+          {% endif %}
+        </div>
       </div>
       {% endif %}
     </div>
