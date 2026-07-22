@@ -20,6 +20,42 @@ description: "Галерея работ Mila Beauty Room. Стрижки, окр
   </div>
 </div>
 
+<!-- ===== BEFORE / AFTER CAROUSEL ===== -->
+{% if site.data.gallery.before_after and site.data.gallery.before_after != "" %}
+<section class="carousel-section" style="text-align:center;">
+  <div class="container">
+    <span class="hero-eyebrow fade-in">Трансформации</span>
+    <h2 class="section-title fade-in">До и после</h2>
+    <span class="gold-line fade-in"></span>
+
+    <div class="carousel-wrap carousel-wrap-ba" id="mainCarousel">
+      <div class="carousel-track" id="carouselTrack">
+
+        {% for slide in site.data.gallery.before_after %}
+        <div class="carousel-slide">
+          {% if slide.image and slide.image != "" %}
+          <img src="{{ slide.image | relative_url }}" alt="До и после — работа Mila Beauty Room" loading="lazy" />
+          {% endif %}
+          {% if slide.category_label or slide.caption %}
+          <div class="carousel-caption">
+            {% if slide.category_label and slide.category_label != "" %}<span>{{ slide.category_label }}</span>{% endif %}
+            {{ slide.caption }}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+
+      </div>
+
+      <button class="carousel-btn carousel-btn-prev" id="prevBtn" aria-label="Назад">&#8592;</button>
+      <button class="carousel-btn carousel-btn-next" id="nextBtn" aria-label="Вперёд">&#8594;</button>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots"></div>
+  </div>
+</section>
+{% endif %}
+
 <!-- ===== GALLERY GRID ===== -->
 <section class="gallery-section">
   <div class="container">
