@@ -36,12 +36,6 @@ description: "Галерея работ Mila Beauty Room. Стрижки, окр
           {% if slide.image and slide.image != "" %}
           <img src="{{ slide.image | relative_url }}" alt="До и после — работа Mila Beauty Room" loading="lazy" />
           {% endif %}
-          {% if slide.category_label or slide.caption %}
-          <div class="carousel-caption">
-            {% if slide.category_label and slide.category_label != "" %}<span>{{ slide.category_label }}</span>{% endif %}
-            {{ slide.caption }}
-          </div>
-          {% endif %}
         </div>
         {% endfor %}
 
